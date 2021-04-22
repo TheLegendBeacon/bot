@@ -30,7 +30,7 @@ class Catify(commands.Cog):
 
             if len(display_name) > 26:
                 embed = Embed(
-                    title=random.choice(NECATIVE_REPLIES),
+                    title=random.choice(NEᓚᘏᗢIVE_REPLIES),
                     description=(
                         "Your display name is too long to be catified! "
                         "Please change it to be under 26 characters."
@@ -50,7 +50,7 @@ class Catify(commands.Cog):
         else:
             if len(text) >= 1500:
                 embed = Embed(
-                    title=random.choice(NECATIVE_REPLIES),
+                    title=random.choice(NEᓚᘏᗢIVE_REPLIES),
                     description="Submitted text was too large! Please submit something under 1500 characters.",
                     color=colors["orange"]
                 )
