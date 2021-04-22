@@ -1,10 +1,10 @@
 bot:
-  prefix:      "!"
+  prefix:      "c!"
   purge_limit: 200 
 
   status:
     type: "LISTENING"
-    text: "for commands. | !help"
+    text: "for commands. | c!help"
 
 colors:
   red:          0xFF0000
