@@ -13,7 +13,7 @@ BOT_REPO_URL = "https://github.com/cat-dev-group/bot"
 
 MESSAGE_LIMIT = 2000
 
-NEᓚᘏᗢIVE_REPLIES = [
+NECATIVE_REPLIES = [
     "Nah mate, this ain't gonna work.",
     "**MEOW** nope **MEOW**",
     "Unpoggers.",
