@@ -1,0 +1,79 @@
+bot:
+  prefix:      "c!"
+  purge_limit: 200 
+
+  status:
+    type: "LISTENING"
+    text: "for commands. | c!help"
+
+colors:
+  red:          0xFF0000
+  orange:       0xFFA500
+  yellow:       0xFFFF00
+  green:        0x00ff00
+  light_blue:   0x91FFFD
+  sky_blue:     0x00FFFB
+  blue:         0x0000FF
+  dark_blue:    0x00008B
+  purple:       0xBF00FF
+  pink:         0xF699CD
+  white:        0xFFFFFF
+  light_gray:   0xD6D6D6
+  gray:         0xA8A8A8
+  dark_gray:    0x595959
+  black:        0x000000
+  blurple:      0x7289DA
+
+guild:
+  id:     808854246119178250
+  invite: "https://discord.gg/yt8s6C33fw"
+
+  channels:
+    # No category
+    roles:      809431886941650964
+    cats:       834169331108675604
+    
+    # development
+    dev:        809125747037306960
+    spam:       809158704644751370
+    resources:  834503282243141642
+    
+    # Logs
+    dev_log:    834438897567400018
+    error_log:  834495121055285288
+    mod_log:    834500035982786620
+
+    # voice
+    voice_chat: 808854246119178254
+  
+  roles:
+    bots:       811331779138682930
+    helper:     834065360943579136
+    cat_dev:    833841708805652481
+    bot_tester: 809155836622405683
+    friends:    809429873746771979
+    divine_cat: 834795622833848331
+
+    cat:
+      zero:  834240256530317313
+      one:   834171584017203261
+      two:   834171044385390612
+      three: 834171124857831454
+      four:  834171211147640872
+      five:  834171280080896021
+      six:   834171331490086912
+      seven: 834171399304249374
+      eight: 834171451228684299
+      nine:  834171530795417651
+
+cats:
+  - "ᓚᘏᗢ"
+  - "ᘡᘏᗢ"
+  - "🐈"
+  - "ᓕᘏᗢ"
+  - "ᓇᘏᗢ"
+  - "ᓂᘏᗢ"
+  - "ᘣᘏᗢ"
+  - "ᕦᘏᗢ"
+  - "ᕂᘏᗢ"
+  
