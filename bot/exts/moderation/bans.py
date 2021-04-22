@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 
 from bot.constants import Channels
+from bot.constants import DURATION_DICT
 
 
 class Moderation(commands.Cog):
@@ -27,7 +28,11 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_role("Cat Devs")
-    async def mute(self, ctx: commands.Context, user: discord.Member = None, time: int = 5, *, reason: str = "Because of naughtiness"):
+    async def mute(
+        self, ctx: commands.Context, user: discord.Member = None,
+        time: str = "5m", *, reason: str = "Because of naughtiness"
+    ):
+        
         if user == self.bot.user:
             await ctx.send("You can't mute me!")
             return
@@ -35,6 +40,7 @@ class Moderation(commands.Cog):
             await ctx.send("You can't mute yourself!")
             return
         role = discord.utils.get(ctx.guild.roles, name="Suppressed")
+        
         if not role:
             try:  
                 muted = await ctx.guild.create_role(
@@ -51,10 +57,11 @@ class Moderation(commands.Cog):
                 return await ctx.send(
                     "I have no permissions to make a muted role"
                 )
+            
         await user.add_roles(role)
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` minute(s) for reason `{reason}`.")
-        await asyncio.sleep(time * 60)
+        await asyncio.sleep(int(time[0]) * DURATION_DICT[time[1]])
         await user.remove_roles(role)
 
     @commands.command(aliases=["yeetmsg"])
