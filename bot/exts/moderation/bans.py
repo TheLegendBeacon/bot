@@ -8,8 +8,11 @@ from bot.constants import DURATION_DICT
 
 class Moderation(commands.Cog):
     """Cog for moderation commands."""
+    
+    
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+    
     
     @commands.command()
     @commands.has_role("Cat Devs")
@@ -57,13 +60,15 @@ class Moderation(commands.Cog):
                 return await ctx.send(
                     "I have no permissions to make a muted role"
                 )
-            
-        await user.add_roles(role)
+
         channel = self.bot.get_channel(Channels.modlog)
-        await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` minute(s) for reason `{reason}`.")
+        await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` for reason `{reason}`.")
+        
+        await user.add_roles(role)
         await asyncio.sleep(int(time[0]) * DURATION_DICT[time[1]])
         await user.remove_roles(role)
 
+        
     @commands.command(aliases=["yeetmsg"])
     @commands.has_role("Cat Devs")
     async def purge(self, ctx: commands.Context, limit: int, *, reason: str = None) -> None:
