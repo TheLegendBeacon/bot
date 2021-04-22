@@ -14,7 +14,7 @@ class Moderation(commands.Cog):
         self.bot = bot
     
     
-    @commands.command()
+    @commands.command(aliases=["exile"])
     @commands.has_role("Cat Devs")
     async def pban(self, ctx: commands.Context, user: discord.User = None, *, reason: str = "Badly behaved"):
         if user == self.bot.user:
@@ -29,7 +29,7 @@ class Moderation(commands.Cog):
         await ctx.guild.ban(user)
     
 
-    @commands.command()
+    @commands.command(aliases=(["s" + "h" * i for i in range(1, 10)] + ["shut"]))
     @commands.has_role("Cat Devs")
     async def mute(
         self, ctx: commands.Context, user: discord.Member = None,
