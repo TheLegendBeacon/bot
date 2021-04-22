@@ -6,11 +6,10 @@ from discord import AllowedMentions, Embed, Forbidden
 from discord.ext import commands
 
 from bot.constants import NECATIVE_REPLIES
-import yaml
+from bot.utilities import get_yaml_val
 
-with open("config.yml", "r") as f:
-    colors = yaml.load(f)["colors"]
-    cats = yaml.load(f)["cats"]
+COLORS = get_yaml_val('config.yml', 'colors')
+CATS = get_yaml_val('config.yml', 'cats')
 
 
 class Catify(commands.Cog):
@@ -35,13 +34,13 @@ class Catify(commands.Cog):
                         "Your display name is too long to be catified! "
                         "Please change it to be under 26 characters."
                     ),
-                    color=colors["red"]
+                    color=COLORS["red"]
                 )
                 await ctx.send(embed=embed)
                 return
 
             else:
-                display_name += f" | {random.choice(cats)}"
+                display_name += f" | {random.choice(CATS)}"
 
                 await ctx.send(f"Your catified nickname is: `{display_name}`", allowed_mentions=AllowedMentions.none())
 
@@ -52,7 +51,7 @@ class Catify(commands.Cog):
                 embed = Embed(
                     title=random.choice(NECATIVE_REPLIES),
                     description="Submitted text was too large! Please submit something under 1500 characters.",
-                    color=colors["orange"]
+                    color=COLORS["orange"]
                 )
                 await ctx.send(embed=embed)
                 return
@@ -62,10 +61,10 @@ class Catify(commands.Cog):
                 name = name.lower()
                 if "cat" in name:
                     if random.randint(0, 5) == 5:
-                        string_list[index] = name.replace("cat", f"**{random.choice(cats)}**")
+                        string_list[index] = name.replace("cat", f"**{random.choice(CATS)}**")
                     else:
-                        string_list[index] = name.replace("cat", random.choice(cats))
-                for element in cats:
+                        string_list[index] = name.replace("cat", random.choice(CATS))
+                for element in CATS:
                     if element in name:
                         string_list[index] = name.replace(element, "cat")
 
@@ -74,9 +73,9 @@ class Catify(commands.Cog):
             for _ in range(random.randint(1, string_len)):
                 # insert cat at random index
                 if random.randint(0, 5) == 5:
-                    string_list.insert(random.randint(0, len(string_list)), f"**{random.choice(cats)}**")
+                    string_list.insert(random.randint(0, len(string_list)), f"**{random.choice(CATS)}**")
                 else:
-                    string_list.insert(random.randint(0, len(string_list)), random.choice(cats))
+                    string_list.insert(random.randint(0, len(string_list)), random.choice(CATS))
 
             text = " ".join(string_list)
             await ctx.send(
