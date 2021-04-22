@@ -1,4 +1,4 @@
-def get_config_val(*strings: str) -> dict:
+def get_config_val(yaml_file: str, *strings: str) -> dict:
 
     import yaml
     from string import punctuation
@@ -9,7 +9,7 @@ def get_config_val(*strings: str) -> dict:
 
         sep_string = "".join([" " if char in punctuation else char for char in string]).split()
 
-        with open("config.yaml") as config:
+        with open(yaml_file) as config:
 
             data = yaml.load(config, Loader=yaml.UnsafeLoader)
 
