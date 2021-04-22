@@ -1,6 +1,8 @@
-import asyncio
+from datetime import datetime, timedelta
+import json
+
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 from bot.constants import Channels
 from bot.constants import DURATION_DICT
@@ -42,6 +44,7 @@ class Moderation(commands.Cog):
         elif user == ctx.author:
             await ctx.send("You can't mute yourself!")
             return
+        
         role = discord.utils.get(ctx.guild.roles, name="Suppressed")
         
         if not role:
@@ -64,9 +67,20 @@ class Moderation(commands.Cog):
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` for reason `{reason}`.")
         
+        unmute_time = datetime.now() + timedelta(
+            seconds=int(time[0]) * DURATION_DICT[time[1]]
+        )
+        
         await user.add_roles(role)
-        await asyncio.sleep(int(time[0]) * DURATION_DICT[time[1]])
-        await user.remove_roles(role)
+        
+        json_input = {user.id, unmute_time.timestamp()}
+        with open("unmute_times.txt", "r+") as f:
+            try:
+                data = json.load(f)
+                f.seek(0)
+                json.dump({**data, **json_input}, f)
+            except json.decoder.JSONDecodeError:
+                json.dump(json_input, f)
 
         
     @commands.command(aliases=["yeetmsg"])
@@ -79,10 +93,21 @@ class Moderation(commands.Cog):
         await ctx.channel.purge(limit=limit)
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(f"{ctx.message.author.mention} purged at most `{limit}` messages for reason `{reason}`.")
+    
+    
+    @tasks.loop(seconds=2)
+    async def unmute_check(self, ctx: commands.Context):
+        role = discord.utils.get(ctx.guild.roles, name="Suppressed")
+        
+        with open("unmute_times.txt", "r+") as f:
+            data = json.load(f)
+            
+        for user_id, unmute_time in data.items():
+            if datetime.now() > unmute_time:
+                user = self.bot.get_user(user_id)
+                user.remove_roles(role)
 
 
 def setup(bot: commands.Bot):
     """Loads cog."""
     bot.add_cog(Moderation(bot))
-
-
