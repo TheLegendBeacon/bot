@@ -1,5 +1,8 @@
 This is the official community mascot bot for Catlang, the supreme cat-oriented programming langauge with a revolutionnary programming paradigm.
 
+To start contributing, go to [our contributing guide](https://github.com/cat-dev-group/bot/blob/90285c30bcbf11db1fd202e332a435647fef205e/CONTRIBUTING.md) to review our guidelines.
+
+Also, join the [discord](https://discord.gg/yt8s6C33fw)!
 
 ALL HAIL THE DIVINE ᓚᘏᗢ!
 
