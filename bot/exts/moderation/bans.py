@@ -12,7 +12,7 @@ class Moderation(commands.Cog):
     
     @commands.command()
     @commands.has_role("Cat Devs")
-    async def pban(self, ctx: commands.Context, user: discord.User = None, reason: str = "Badly behaved"):
+    async def pban(self, ctx: commands.Context, user: discord.User = None, *, reason: str = "Badly behaved"):
         if user == self.bot.user:
             await ctx.send("You can't ban me!")
             return
