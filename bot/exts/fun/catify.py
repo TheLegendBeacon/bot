@@ -5,6 +5,7 @@ from typing import Optional
 from discord import AllowedMentions, Embed, Forbidden
 from discord.ext import commands
 
+from bot.constants import NECATIVE_REPLIES
 import yaml
 
 with open("config.yml", "r") as f:
@@ -29,7 +30,7 @@ class Catify(commands.Cog):
 
             if len(display_name) > 26:
                 embed = Embed(
-                    title=random.choice("no."),
+                    title=random.choice(NECATIVE_REPLIES),
                     description=(
                         "Your display name is too long to be catified! "
                         "Please change it to be under 26 characters."
@@ -49,7 +50,7 @@ class Catify(commands.Cog):
         else:
             if len(text) >= 1500:
                 embed = Embed(
-                    title=random.choice("no."),
+                    title=random.choice(NECATIVE_REPLIES),
                     description="Submitted text was too large! Please submit something under 1500 characters.",
                     color=colors["orange"]
                 )
