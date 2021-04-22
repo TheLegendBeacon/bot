@@ -6,7 +6,6 @@ def get_config_val(yaml_file: str, *strings: str) -> dict:
     return_dict = {}
 
     for string in strings:
-
         sep_string = "".join([" " if char in punctuation else char for char in string]).split()
 
         with open(yaml_file) as config:
@@ -14,9 +13,8 @@ def get_config_val(yaml_file: str, *strings: str) -> dict:
             data = yaml.load(config, Loader=yaml.UnsafeLoader)
 
             for key in sep_string:
-
+                
                 if key in data:
-
                     data = data[key]
 
                     if key == sep_string[-1]:
