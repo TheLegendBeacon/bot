@@ -1,4 +1,4 @@
-def get_config_val(yaml_file: str, *strings: str) -> dict:
+def get_yaml_val(yaml_file: str, *strings: str) -> dict:
 
     import yaml
     from string import punctuation
