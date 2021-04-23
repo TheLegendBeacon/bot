@@ -44,43 +44,50 @@ class Moderation(commands.Cog):
         elif user == ctx.author:
             await ctx.send("You can't mute yourself!")
             return
-        
-        role = discord.utils.get(ctx.guild.roles, name="Suppressed")
-        
-        if not role:
-            try:  
-                muted = await ctx.guild.create_role(
-                    name="Suppressed", reason="To use for muting"
-                )
-                for channel in ctx.guild.channels: 
-                    await channel.set_permissions(
-                        muted,
-                        send_messages=False,
-                        read_message_history=False,
-                        read_messages=False,
-                    )
-            except discord.Forbidden:
-                return await ctx.send(
-                    "I have no permissions to make a muted role"
+
+    role = discord.utils.get(ctx.guild.roles, name="Suppressed")
+
+    if not role:
+        try:
+            muted = await ctx.guild.create_role(
+                name="Suppressed", reason="To use for muting"
+            )
+
+            for channel in ctx.guild.channels:
+                await channel.set_permissions(
+                    muted,
+                    send_messages=False,
+                    speak=False,
+                    add_reactions=False,
                 )
 
-        channel = self.bot.get_channel(Channels.modlog)
-        await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` for reason `{reason}`.")
-        
-        unmute_time = datetime.now() + timedelta(
-            seconds=int(time[0]) * DURATION_DICT[time[1]]
-        )
-        
-        await user.add_roles(role)
-        
-        json_input = {user.id, unmute_time.timestamp()}
-        with open("unmute_times.txt", "r+") as f:
-            try:
-                data = json.load(f)
-                f.seek(0)
-                json.dump({**data, **json_input}, f)
-            except json.decoder.JSONDecodeError:
-                json.dump(json_input, f)
+            await ctx.guild.edit_role_positions(
+                positions={muted: 19},
+                reason="To override cat dev permissions"
+            )
+
+        except discord.Forbidden:
+            return await ctx.send(
+                "I have no permissions to make a muted role"
+            )
+
+    channel = client.get_channel(Channels.modlog)
+    await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` for reason `{reason}`.")
+
+    unmute_time = datetime.now() + timedelta(
+        seconds=int(time[0:-1]) * DURATION_DICT[time[-1]]
+    )
+
+    await user.add_roles(role or muted)
+
+    json_input = {user.id: unmute_time.timestamp()}
+    with open("unmute_times.txt", "r+") as f:
+        try:
+            data = json.load(f)
+            f.seek(0)
+            json.dump({**data, **json_input}, f)
+        except json.decoder.JSONDecodeError:
+            json.dump(json_input, f)
 
         
     @commands.command(aliases=["yeetmsg"])
@@ -95,17 +102,34 @@ class Moderation(commands.Cog):
         await channel.send(f"{ctx.message.author.mention} purged at most `{limit}` messages for reason `{reason}`.")
     
     
-    @tasks.loop(seconds=2)
-    async def unmute_check(self, ctx: commands.Context):
-        role = discord.utils.get(ctx.guild.roles, name="Suppressed")
-        
-        with open("unmute_times.txt", "r+") as f:
-            data = json.load(f)
-            
+    @tasks.loop(seconds=0.5)
+    async def unmute_check(self):
+        role = discord.utils.get(self.bot.get_guild(808854246119178250).roles, name="Suppressed")
+
+        with open("unmute_times.txt", "r") as f:
+            try:
+                data = json.load(f)
+            except json.decoder.JSONDecodeError:
+                return
+
+        keys_to_del = []
+
         for user_id, unmute_time in data.items():
-            if datetime.now() > unmute_time:
-                user = self.bot.get_user(user_id)
-                user.remove_roles(role)
+            if datetime.now().timestamp() > unmute_time:
+                user = self.bot.get_guild(808854246119178250).get_member(int(user_id))
+                try:
+                    await user.remove_roles(role)
+                except AttributeError:
+                    return
+
+                keys_to_del.append(user_id)
+
+        for key in keys_to_del:
+            del data[key]
+
+        with open("unmute_times.txt", "w") as f:
+            f.seek(0)
+            json.dump(data, f)
 
 
 def setup(bot: commands.Bot):
