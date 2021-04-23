@@ -12,8 +12,7 @@ GUILD_ID = get_yaml_val("config.yml", "guild.id")
 
 
 class Moderation(commands.Cog):
-    """Cog for moderation commands."""
-    
+    """Cog for moderation commands."""    
     
     def __init__(self, bot: commands.Bot):
         self.bot = bot
@@ -22,7 +21,13 @@ class Moderation(commands.Cog):
     
     @commands.command(aliases=["exile"])
     @commands.has_role("Cat Devs")
-    async def pban(self, ctx: commands.Context, user: discord.User = None, *, reason: str = "Badly behaved"):
+    async def pban(
+        self,
+        ctx: commands.Context,
+        user: discord.User = None,
+        *,
+        reason: str = "Badly behaved",
+    ):
         if user == self.bot.user:
             await ctx.send("You can't ban me!")
             return
@@ -31,9 +36,10 @@ class Moderation(commands.Cog):
             return
         await ctx.send(f"Succesfully banned {user.name}")
         channel = self.bot.get_channel(Channels.modlog)
-        await channel.send(f"`{ctx.author.mention}` banned `{user.mention}` for reason `{reason}`.")
+        await channel.send(
+            f"`{ctx.author.mention}` banned `{user.mention}` for reason `{reason}`."
+        )
         await ctx.guild.ban(user)
-    
 
     @commands.command(aliases=(["s" + "h" * i for i in range(1, 10)] + ["shut"]))
     @commands.has_role("Cat Devs")
@@ -41,7 +47,6 @@ class Moderation(commands.Cog):
         self, ctx: commands.Context, user: discord.Member = None,
         time: str = "5m", *, reason: str = "Because of naughtiness"
     ):
-        
         if user == self.bot.user:
             await ctx.send("You can't mute me!")
             return
@@ -96,11 +101,13 @@ class Moderation(commands.Cog):
         
     @commands.command(aliases=["yeetmsg"])
     @commands.has_role("Cat Devs")
-    async def purge(self, ctx: commands.Context, limit: int, *, reason: str = None) -> None:
+    async def purge(
+        self, ctx: commands.Context, limit: int, *, reason: str = None
+    ) -> None:
         if not 0 < int(limit) < 200:
             await ctx.send("Please purge between 0 and 200 messages.")
             return
-        
+
         await ctx.channel.purge(limit=limit)
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(f"{ctx.message.author.mention} purged at most `{limit}` messages for reason `{reason}`.")

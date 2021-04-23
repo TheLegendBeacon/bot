@@ -21,7 +21,7 @@ NECATIVE_REPLIES = [
     "Not in a million cat years.",
     "Yeah, no.",
     "<command cannot be executed>",
-    "Error code: 3120"
+    "Error code: 3120",
 ]
 
 DURATION_DICT = {
