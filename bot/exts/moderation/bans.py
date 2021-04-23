@@ -17,6 +17,7 @@ class Moderation(commands.Cog):
     
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self.unmute_check.start()
     
     
     @commands.command(aliases=["exile"])
