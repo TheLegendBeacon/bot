@@ -7,6 +7,9 @@ from discord.ext import commands, tasks
 from bot.constants import Channels
 from bot.constants import DURATION_DICT
 
+from bot.utilities import get_yaml_val
+GUILD_ID = get_yaml_val("config.yml", "guild.id")
+
 
 class Moderation(commands.Cog):
     """Cog for moderation commands."""
@@ -104,7 +107,8 @@ class Moderation(commands.Cog):
     
     @tasks.loop(seconds=0.5)
     async def unmute_check(self):
-        role = discord.utils.get(self.bot.get_guild(808854246119178250).roles, name="Suppressed")
+        guild = self.bot.get_guild(GUILD_ID)
+        role = discord.utils.get(guild.roles, name="Suppressed")
 
         with open("unmute_times.txt", "r") as f:
             try:
@@ -116,7 +120,7 @@ class Moderation(commands.Cog):
 
         for user_id, unmute_time in data.items():
             if datetime.now().timestamp() > unmute_time:
-                user = self.bot.get_guild(808854246119178250).get_member(int(user_id))
+                user = guild.get_member(int(user_id))
                 try:
                     await user.remove_roles(role)
                 except AttributeError:
