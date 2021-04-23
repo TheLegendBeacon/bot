@@ -49,49 +49,49 @@ class Moderation(commands.Cog):
             await ctx.send("You can't mute yourself!")
             return
 
-    role = discord.utils.get(ctx.guild.roles, name="Suppressed")
+        role = discord.utils.get(ctx.guild.roles, name="Suppressed")
 
-    if not role:
-        try:
-            muted = await ctx.guild.create_role(
-                name="Suppressed", reason="To use for muting"
-            )
-
-            for channel in ctx.guild.channels:
-                await channel.set_permissions(
-                    muted,
-                    send_messages=False,
-                    speak=False,
-                    add_reactions=False,
+        if not role:
+            try:
+                muted = await ctx.guild.create_role(
+                    name="Suppressed", reason="To use for muting"
                 )
 
-            await ctx.guild.edit_role_positions(
-                positions={muted: 19},
-                reason="To override cat dev permissions"
-            )
+                for channel in ctx.guild.channels:
+                    await channel.set_permissions(
+                        muted,
+                        send_messages=False,
+                        speak=False,
+                        add_reactions=False,
+                    )
 
-        except discord.Forbidden:
-            return await ctx.send(
-                "I have no permissions to make a muted role"
-            )
+                await ctx.guild.edit_role_positions(
+                    positions={muted: 19},
+                    reason="To override cat dev permissions"
+                )
 
-    channel = client.get_channel(Channels.modlog)
-    await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` for reason `{reason}`.")
+            except discord.Forbidden:
+                return await ctx.send(
+                    "I have no permissions to make a muted role"
+                )
 
-    unmute_time = datetime.now() + timedelta(
-        seconds=int(time[0:-1]) * DURATION_DICT[time[-1]]
-    )
+        channel = client.get_channel(Channels.modlog)
+        await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` for reason `{reason}`.")
 
-    await user.add_roles(role or muted)
+        unmute_time = datetime.now() + timedelta(
+            seconds=int(time[0:-1]) * DURATION_DICT[time[-1]]
+        )
 
-    json_input = {user.id: unmute_time.timestamp()}
-    with open("unmute_times.txt", "r+") as f:
-        try:
-            data = json.load(f)
-            f.seek(0)
-            json.dump({**data, **json_input}, f)
-        except json.decoder.JSONDecodeError:
-            json.dump(json_input, f)
+        await user.add_roles(role or muted)
+
+        json_input = {user.id: unmute_time.timestamp()}
+        with open("unmute_times.txt", "r+") as f:
+            try:
+                data = json.load(f)
+                f.seek(0)
+                json.dump({**data, **json_input}, f)
+            except json.decoder.JSONDecodeError:
+                json.dump(json_input, f)
 
         
     @commands.command(aliases=["yeetmsg"])
