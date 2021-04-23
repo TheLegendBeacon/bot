@@ -9,7 +9,7 @@ from bot.constants import NECATIVE_REPLIES
 from bot.utilities import get_yaml_val
 
 COLORS = get_yaml_val('config.yml', 'colors')
-CATS = get_yaml_val('config.yml', 'cats')
+CATS = get_yaml_val('config.yml', 'cats')["cats"]
 
 
 class Catify(commands.Cog):
