@@ -1,17 +1,25 @@
-import asyncio
+from datetime import datetime, timedelta
+import json
+
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 from bot.constants import Channels
+from bot.constants import DURATION_DICT
+
+from bot.utilities import get_yaml_val
+GUILD_ID = get_yaml_val("config.yml", "guild.id")
 
 
 class Moderation(commands.Cog):
-    """Cog for moderation commands."""
-
+    """Cog for moderation commands."""    
+    
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-
-    @commands.command()
+        self.unmute_check.start()
+    
+    
+    @commands.command(aliases=["exile"])
     @commands.has_role("Cat Devs")
     async def pban(
         self,
@@ -33,15 +41,11 @@ class Moderation(commands.Cog):
         )
         await ctx.guild.ban(user)
 
-    @commands.command()
+    @commands.command(aliases=(["s" + "h" * i for i in range(1, 10)] + ["shut"]))
     @commands.has_role("Cat Devs")
     async def mute(
-        self,
-        ctx: commands.Context,
-        user: discord.Member = None,
-        time: int = 5,
-        *,
-        reason: str = "Because of naughtiness",
+        self, ctx: commands.Context, user: discord.Member = None,
+        time: str = "5m", *, reason: str = "Because of naughtiness"
     ):
         if user == self.bot.user:
             await ctx.send("You can't mute me!")
@@ -49,29 +53,52 @@ class Moderation(commands.Cog):
         elif user == ctx.author:
             await ctx.send("You can't mute yourself!")
             return
-        role = discord.utils.get(ctx.guild.roles, name="Suppressed")
-        if not role:
-            try:
-                muted = await ctx.guild.create_role(
-                    name="Suppressed", reason="To use for muting"
-                )
-                for channel in ctx.guild.channels:
-                    await channel.set_permissions(
-                        muted,
-                        send_messages=False,
-                        read_message_history=False,
-                        read_messages=False,
-                    )
-            except discord.Forbidden:
-                return await ctx.send("I have no permissions to make a muted role")
-        await user.add_roles(role)
-        channel = self.bot.get_channel(Channels.modlog)
-        await channel.send(
-            f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` minute(s) for reason `{reason}`."
-        )
-        await asyncio.sleep(time * 60)
-        await user.remove_roles(role)
+          
+    role = discord.utils.get(ctx.guild.roles, name="Suppressed")
 
+    if not role:
+        try:
+            muted = await ctx.guild.create_role(
+                name="Suppressed", reason="To use for muting"
+            )
+
+            for channel in ctx.guild.channels:
+                await channel.set_permissions(
+                    muted,
+                    send_messages=False,
+                    speak=False,
+                    add_reactions=False,
+                )
+
+            await ctx.guild.edit_role_positions(
+                positions={muted: 19},
+                reason="To override cat dev permissions"
+            )
+
+        except discord.Forbidden:
+            return await ctx.send(
+                "I have no permissions to make a muted role"
+            )
+
+    channel = client.get_channel(Channels.modlog)
+    await channel.send(f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` for reason `{reason}`.")
+
+    unmute_time = datetime.now() + timedelta(
+        seconds=int(time[0:-1]) * DURATION_DICT[time[-1]]
+    )
+
+    await user.add_roles(role or muted)
+
+    json_input = {user.id: unmute_time.timestamp()}
+    with open("unmute_times.txt", "r+") as f:
+        try:
+            data = json.load(f)
+            f.seek(0)
+            json.dump({**data, **json_input}, f)
+        except json.decoder.JSONDecodeError:
+            json.dump(json_input, f)
+
+        
     @commands.command(aliases=["yeetmsg"])
     @commands.has_role("Cat Devs")
     async def purge(
@@ -83,9 +110,38 @@ class Moderation(commands.Cog):
 
         await ctx.channel.purge(limit=limit)
         channel = self.bot.get_channel(Channels.modlog)
-        await channel.send(
-            f"{ctx.message.author.mention} purged at most `{limit}` messages for reason `{reason}`."
-        )
+        await channel.send(f"{ctx.message.author.mention} purged at most `{limit}` messages for reason `{reason}`.")
+    
+    
+    @tasks.loop(seconds=0.5)
+    async def unmute_check(self):
+        guild = self.bot.get_guild(GUILD_ID)
+        role = discord.utils.get(guild.roles, name="Suppressed")
+
+        with open("unmute_times.txt", "r") as f:
+            try:
+                data = json.load(f)
+            except json.decoder.JSONDecodeError:
+                return
+
+        keys_to_del = []
+
+        for user_id, unmute_time in data.items():
+            if datetime.now().timestamp() > unmute_time:
+                user = guild.get_member(int(user_id))
+                try:
+                    await user.remove_roles(role)
+                except AttributeError:
+                    return
+
+                keys_to_del.append(user_id)
+
+        for key in keys_to_del:
+            del data[key]
+
+        with open("unmute_times.txt", "w") as f:
+            f.seek(0)
+            json.dump(data, f)
 
 
 def setup(bot: commands.Bot):

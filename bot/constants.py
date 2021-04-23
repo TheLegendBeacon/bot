@@ -24,6 +24,17 @@ NECATIVE_REPLIES = [
     "Error code: 3120",
 ]
 
+DURATION_DICT = {
+    "s": 1,
+    "m": 60,
+    "h": 3600,
+    "d": 86400,
+    "w": 604800,
+    "M": 2592000,
+    "y": 31536000,
+    "D": 315360000
+}
+
 
 class Channels:
     devlog = 809125747037306960
