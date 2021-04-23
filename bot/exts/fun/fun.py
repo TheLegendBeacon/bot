@@ -4,7 +4,7 @@ import yaml
 
 from bot.utilities.tio import Tio
 
-with open("config.yml", "r") as file:
+with open("config.yml", "r", encoding="utf-8") as file:
     colors = yaml.load(file)["colors"]
 
 class Fun(commands.Cog):
