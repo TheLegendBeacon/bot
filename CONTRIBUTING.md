@@ -31,4 +31,4 @@
 1. You would need your own discord bot for testing. Create one from the [Discord Developer Portal](https://discord.com/developers/applications) if you haven't already.
 2. Create a test server on discord,  and add your bot there.
 3. Add your bot token and prefix in the `.env` file.
-4. Run the bot with `poetry python -m bot`.
+4. Run the bot with `poetry run python -m bot`.
