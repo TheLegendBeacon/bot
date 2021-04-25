@@ -18,7 +18,6 @@ class Bot(commands.Bot):
 
         self.http_session = ClientSession()
         super().__init__(command_prefix=constants.PREFIX, intents=intents)
-        self.load_extensions()
 
     def load_extensions(self) -> None:
         """Load all the extensions in the exts/ folder."""
@@ -45,6 +44,7 @@ class Bot(commands.Bot):
         """Ran when the bot has connected to discord and is ready."""
         logger.info("Bot online")
         await self.startup_greeting()
+        self.load_extensions()
 
     async def startup_greeting(self) -> None:
         """Announce presence to the devlog channel."""
