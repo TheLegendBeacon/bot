@@ -49,7 +49,7 @@ class Moderation(commands.Cog):
 
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(
-            f"`{ctx.author.mention}` banned `{user.mention}` for reason `{reason}`."
+            f"{ctx.author.mention} banned {user.mention} for reason `{reason}`."
         )
 
     @commands.command(aliases=(["s" + "h" * i for i in range(1, 10)] + ["shut"]))
@@ -95,7 +95,7 @@ class Moderation(commands.Cog):
 
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(
-            f"`{ctx.author.mention}` muted `{user.mention}` for `{time}` for reason `{reason}`."
+            f"{ctx.author.mention} muted {user.mention} for `{time}` for reason `{reason}`."
         )
 
         unmute_time = datetime.now() + timedelta(
