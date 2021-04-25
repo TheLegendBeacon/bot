@@ -70,28 +70,32 @@ class Moderation(commands.Cog):
             await ctx.send("You can't mute yourself!")
             return
 
-        role = discord.utils.get(ctx.guild.roles, name="Suppressed")
+        muted_role = discord.utils.get(ctx.guild.roles, name="Suppressed")
 
-        if not role:
+        if not muted_role:
             try:
-                muted = await ctx.guild.create_role(
+                muted_role = await ctx.guild.create_role(
                     name="Suppressed", reason="To use for muting"
                 )
 
                 for channel in ctx.guild.channels:
                     await channel.set_permissions(
-                        muted,
+                        muted_role,
                         send_messages=False,
                         speak=False,
                         add_reactions=False,
                     )
 
                 await ctx.guild.edit_role_positions(
-                    positions={muted: 19}, reason="To override cat dev permissions"
+                    positions={muted_role: 19}, reason="To override cat dev permissions"
                 )
 
             except discord.Forbidden:
                 return await ctx.send("I have no permissions to make a muted role")
+
+        if muted_role in user.roles:
+            await ctx.send("This user is already muted!")
+            return
 
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(
@@ -102,7 +106,7 @@ class Moderation(commands.Cog):
             seconds=int(time[0:-1]) * DURATION_DICT[time[-1]]
         )
 
-        await user.add_roles(role or muted)
+        await user.add_roles(muted_role)
 
         json_input = {user.id: unmute_time.timestamp()}
         try:
@@ -134,7 +138,7 @@ class Moderation(commands.Cog):
     @tasks.loop(seconds=0.5)
     async def unmute_check(self):
         guild = self.bot.get_guild(GUILD_ID["id"])
-        role = discord.utils.get(guild.roles, name="Suppressed")
+        muted_role = discord.utils.get(guild.roles, name="Suppressed")
 
         with open(UNMUTE_FILE, "r") as f:
             try:
@@ -148,7 +152,7 @@ class Moderation(commands.Cog):
             if datetime.now().timestamp() > unmute_time:
                 user = guild.get_member(int(user_id))
                 try:
-                    await user.remove_roles(role)
+                    await user.remove_roles(muted_role)
                 except AttributeError:
                     return
 
