@@ -1,3 +1,5 @@
+name: Status Embed
+
 on:
   workflow_run:
       workflows: ["Lint", "flake8"]
