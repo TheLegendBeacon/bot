@@ -1,8 +1,13 @@
+import datetime
+
 import discord
 from discord.ext import commands
+import pytz
 import yaml
 
 from bot.utilities.tio import Tio
+
+cst = pytz.timezone("US/Central")
 
 with open("config.yml", "r", encoding="utf-8") as file:
     colors = yaml.load(file)["colors"]
@@ -41,6 +46,27 @@ class Fun(commands.Cog):
             )
         embed.add_field(name="Output", value=f"```{message}```")
         await ctx.send(embed=embed)
+
+    @commands.command(aliases=["quack"])
+    async def duck(self, ctx, typeofduck: str = "duck") -> None:
+        now = datetime.datetime.now(cst)
+        if typeofduck not in ["duck", "manduck"]:
+            await ctx.send("That is not a valid duck type!")
+            return
+        async with ctx.typing():
+            async with self.bot.http_session.get(
+                f"https://quackstack.pythondiscord.com/{typeofduck}"
+            ) as r:
+                jsondata = await r.json()
+                file = jsondata.get("file")
+            embed = discord.Embed(
+                title="Ducky Time!",
+                description="A duck or manduck from [Quackstack](https://quackstack.pydis.org/docs).",
+                color=colors["green"],
+            )
+            embed.set_image(url=f"https://quackstack.pythondiscord.com{file}")
+            embed.set_footer(text=now.strftime("%I:%M %p CST on %d/%m/%Y"))
+            await ctx.send(embed=embed)
 
 
 def setup(bot: commands.Bot):

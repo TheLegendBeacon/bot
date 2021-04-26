@@ -1,7 +1,9 @@
 .idea/
 
-__pycache__/
+**/__pycache__/
 
 .env
 
 .replit
+
+bot.egg-info/
