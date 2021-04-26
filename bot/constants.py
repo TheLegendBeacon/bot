@@ -37,5 +37,5 @@ DURATION_DICT = {
 
 
 class Channels:
-    devlog = 809125747037306960
+    devlog = 834438897567400018
     modlog = 834500035982786620
