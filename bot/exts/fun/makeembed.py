@@ -12,7 +12,7 @@ class makeembed(commands.Cog):
  
     @commands.command()
     async def makeembed(self, ctx):
-        data = get_yaml_val("config.yml", "colors")
+        data = get_yaml_val("config.yml", "colors")["colors"]
 
         questions = [
             "What is the value of **title**?",
