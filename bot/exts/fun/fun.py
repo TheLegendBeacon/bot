@@ -22,7 +22,7 @@ class Fun(commands.Cog):
             code = code.strip("`")
             first_line = code.splitlines()[0]
             if not language.startswith("```"):
-                code = code[len(first_line) + 1 :]
+                code = code[len(first_line) + 1:]
         request = site.new_request(language, code)
         raw = site.send(request)
         exitcode = int(raw[-1])

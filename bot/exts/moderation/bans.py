@@ -65,7 +65,7 @@ class Moderation(commands.Cog):
         if user == self.bot.user:
             await ctx.send("You can't mute me!")
             return
-        
+
         if user == ctx.author:
             await ctx.send("You can't mute yourself!")
             return

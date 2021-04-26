@@ -83,5 +83,5 @@ class Tio:
 
             data = data.replace(data[:16], "")
             start, end = data.rindex("Real time: "), data.rindex("%\nExit code: ")
-            data = data[:start] + data[end + 2 :]
+            data = data[:start] + data[end + 2:]
             return data
