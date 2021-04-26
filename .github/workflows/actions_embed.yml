@@ -2,7 +2,7 @@ name: Status Embed
 
 on:
   workflow_run:
-      workflows: ["flake8 Lint", "flake8"]
+      workflows: ["Lint"]
       types: ["completed"]
 
 jobs:
@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Run the GitHub Actions Status Embed Action
-      uses: SebastiaanZ/github-status-embed-for-discord@v0.2.1
+      uses: SebastiaanZ/github-status-embed-for-discord@v0.3.0
       with:
         # Discord webhook
         webhook_id: '834439045899616257'  # Has to be provided as a string
