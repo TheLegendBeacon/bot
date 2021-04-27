@@ -170,6 +170,7 @@ class Moderation(commands.Cog):
 
     @commands.command(aliases=["pardon"])
     async def unmute(self, ctx: commands.Context, user: discord.Member):
+        """Unmutes mentioned user."""
         role = discord.utils.get(ctx.guild.roles, name="Suppressed")
         await user.remove_roles(role)
         channel = self.bot.get_channel(Channels.modlog)
