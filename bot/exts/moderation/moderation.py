@@ -171,11 +171,23 @@ class Moderation(commands.Cog):
     @commands.command(aliases=["pardon"])
     async def unmute(self, ctx: commands.Context, user: discord.Member):
         """Unmutes mentioned user."""
-        role = discord.utils.get(ctx.guild.roles, name="Suppressed")
-        await user.remove_roles(role)
+        muted_role = discord.utils.get(ctx.guild.roles, name="Suppressed")
+
+        if muted_role not in user.roles:
+            ctx.send("This user is already unmuted!")
+            return
+
+        with open(UNMUTE_FILE, "r+") as f:
+            data = json.load(f)
+            del data[str(user.id)]
+            f.seek(0)
+            json.dump(data, f)
+
+        await user.remove_roles(muted_role)
+
         channel = self.bot.get_channel(Channels.modlog)
-        await ctx.send(f"Successfully unmuted {user.mention}.")
         await channel.send(f"{ctx.author.mention} unmuted {user.mention}.")
+        await ctx.send(f"Successfully unmuted {user.mention}.")
 
 
 def setup(bot: commands.Bot):
