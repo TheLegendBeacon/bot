@@ -89,7 +89,7 @@ class Moderation(commands.Cog):
                     )
 
                 await ctx.guild.edit_role_positions(
-                    positions={muted_role: 19}, reason="To override cat dev permissions"
+                    positions={muted_role: 21}, reason="To override cat dev permissions"
                 )
 
             except discord.Forbidden:
@@ -167,6 +167,14 @@ class Moderation(commands.Cog):
         with open(UNMUTE_FILE, "w") as f:
             f.seek(0)
             json.dump(data, f)
+
+    @commands.command(aliases=["pardon"])
+    async def unmute(self, ctx: commands.Context, user: discord.Member):
+        role = discord.utils.get(ctx.guild.roles, name="Suppressed")
+        await user.remove_roles(role)
+        channel = self.bot.get_channel(Channels.modlog)
+        await ctx.send(f"Successfully unmuted {user.display_name}.")
+        await channel.send(f"{ctx.author.mention} unmuted {user.mention}.")
 
 
 def setup(bot: commands.Bot):
