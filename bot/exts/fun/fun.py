@@ -21,6 +21,7 @@ class Fun(commands.Cog):
     async def eval(
         self, ctx: commands.Context, language: str = "python3", *, code: str = None
     ):
+        """Evaluates code using tio.run."""
         site = Tio()
         if code.strip("`"):
             # Code in message
@@ -49,6 +50,7 @@ class Fun(commands.Cog):
 
     @commands.command(aliases=["quack"])
     async def duck(self, ctx, typeofduck: str = "duck") -> None:
+        """Generates a random duck or manduck using Quackstack."""
         now = datetime.datetime.now(cst)
         if typeofduck not in ["duck", "manduck"]:
             await ctx.send("That is not a valid duck type!")

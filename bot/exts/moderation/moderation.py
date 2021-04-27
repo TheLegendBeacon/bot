@@ -36,6 +36,7 @@ class Moderation(commands.Cog):
         *,
         reason: str = "Badly behaved",
     ):
+        """Permanently bans a user."""
         if user == self.bot.user:
             await ctx.send("You can't ban me!")
             return
@@ -62,6 +63,7 @@ class Moderation(commands.Cog):
         *,
         reason: str = "Because of naughtiness",
     ):
+        """Mutes a user for a set amount of time."""
         if user == self.bot.user:
             await ctx.send("You can't mute me!")
             return
@@ -123,6 +125,7 @@ class Moderation(commands.Cog):
     async def purge(
         self, ctx: commands.Context, limit: int, *, reason: str = None
     ) -> None:
+        """Deletes a set amount of messages."""
 
         if not 0 < int(limit) < 200:
             await ctx.send("Please purge between 0 and 200 messages.")

@@ -17,7 +17,9 @@ class Bot(commands.Bot):
         intents.presences = True
 
         self.http_session = ClientSession()
-        super().__init__(command_prefix=constants.PREFIX, intents=intents)
+        super().__init__(
+            command_prefix=constants.PREFIX, help_command=None, intents=intents
+        )
 
     def load_extensions(self) -> None:
         """Load all the extensions in the exts/ folder."""
@@ -28,11 +30,11 @@ class Bot(commands.Bot):
             dot_path = str(extension).replace(os.sep, ".")[:-3]
 
             self.load_extension(dot_path)
-            logger.info(f"Successfully loaded extension:  {dot_path}")
+            logger.info(f"Successfully loaded extension:  {dot_path}.")
 
     def run(self) -> None:
         """Run the bot with the token in constants.py/.env ."""
-        logger.info("Starting bot")
+        logger.info("Starting bot.")
         if constants.TOKEN is None:
             raise EnvironmentError(
                 "token value is None. "
@@ -42,7 +44,7 @@ class Bot(commands.Bot):
 
     async def on_ready(self) -> None:
         """Ran when the bot has connected to discord and is ready."""
-        logger.info("Bot online")
+        logger.info("Bot online.")
         await self.startup_greeting()
         self.load_extensions()
 

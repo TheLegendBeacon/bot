@@ -41,6 +41,7 @@ class Zen(commands.Cog):
 
     @commands.command(aliases=["zenofpycat", "zen"])
     async def zencat(self, ctx: commands.Context, index: Optional[int]) -> None:
+        """Sends a modified version of the python zen."""
         rand_color = COLORS[random.choice(list(COLORS.keys()))]
 
         if index is None:

@@ -11,6 +11,7 @@ class makeembed(commands.Cog):
 
     @commands.command()
     async def makeembed(self, ctx):
+        """Makes an embed based on parameters set by the user."""
         data = get_yaml_val("config.yml", "colors")["colors"]
 
         questions = [
