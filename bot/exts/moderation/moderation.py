@@ -174,7 +174,7 @@ class Moderation(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name="Suppressed")
         await user.remove_roles(role)
         channel = self.bot.get_channel(Channels.modlog)
-        await ctx.send(f"Successfully unmuted {user.display_name}.")
+        await ctx.send(f"Successfully unmuted {user.mention}.")
         await channel.send(f"{ctx.author.mention} unmuted {user.mention}.")
 
 
