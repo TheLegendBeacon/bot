@@ -33,7 +33,7 @@ class Help(commands.Cog):
 
             await ctx.send(embed=embed)
 
-        elif command not in self.bot.commands:
+        else:
             commandraw = self.bot.get_command(command.lower())
             if commandraw is None:
                 await ctx.send(f"`{command}` is an invalid command!")
@@ -53,31 +53,10 @@ class Help(commands.Cog):
             embed.add_field(
                 name="Usage", value=f"`{bot.constants.PREFIX}{name}{usage}`"
             )
-
-            embed.add_field(name="Can also use", value=f"*{aliases}*")
-            await ctx.send(embed=embed)
-        else:
-            command = command.lower()
-            commandraw = self.bot.get_command(command)
-            command_data = commandraw.help
-            alias_list = commandraw.aliases
-            command_args = commandraw.signature
-
-            embed = discord.Embed(
-                title=f"Help: {command}",
-                description=f"*{command_data}*",
-                color=colors["light_blue"],
-            )
-
-            aliases = ", ".join(alias_list)
-
-            embed.add_field(
-                name="Usage", value=f"`{bot.constants.PREFIX}{command}{command_args}`"
-            )
-
-            if aliases != "":
+            if aliases == "" or " ":
+                pass
+            else:
                 embed.add_field(name="Can also use", value=f"*{aliases}*")
-
             await ctx.send(embed=embed)
 
 
