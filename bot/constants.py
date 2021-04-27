@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-PREFIX = os.getenv("PREFIX") or "!"
+PREFIX = os.getenv("PREFIX") or "--"
 TOKEN = os.getenv("TOKEN")
 
 EXTENSIONS = pathlib.Path("bot/exts/")
