@@ -12,4 +12,4 @@ To honor the ᓚᘏᗢ and to help more people realize this universal and object
 
 So here we are now, the present. This is only Phase One of Catdomination of the world. Join us; we have way more projects in the future, and ALL HAIL THE DIVINE ᓚᘏᗢ!
 ## Contributing
-Please read `CONTRIBUTING.md`.
+Please read [`CONTRIBUTING.md`](https://github.com/cat-dev-group/bot/blob/main/CONTRIBUTING.md).
