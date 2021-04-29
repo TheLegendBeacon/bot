@@ -1,23 +1,22 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool]
 [tool.poetry]
+authors = ["cat"]
+description = ""
 name = "bot"
 version = "0.1.0"
-description = ""
-authors = ["cat"]
-
 [tool.poetry.dependencies]
-python = "^3.8.5"
+PyYAML = "^5.4.1"
+datetime = "^4.3"
 "discord.py" = "^1.7.1"
 loguru = "^0.5.3"
+python = "^3.8"
 python-dotenv = "^0.17.0"
-PyYAML = "^5.4.1"
-utils = "^1.0.1"
 pytz = "^2021.1"
-datetime = "^4.3"
-
+utils = "^1.0.1"
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
 black = "^20.8b1"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+pytest = "^5.2"

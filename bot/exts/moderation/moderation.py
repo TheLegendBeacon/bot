@@ -169,6 +169,7 @@ class Moderation(commands.Cog):
             json.dump(data, f)
 
     @commands.command(aliases=["pardon"])
+    @commands.has_role("Cat Devs")
     async def unmute(self, ctx: commands.Context, user: discord.Member):
         """Unmutes mentioned user."""
         muted_role = discord.utils.get(ctx.guild.roles, name="Suppressed")
@@ -188,6 +189,18 @@ class Moderation(commands.Cog):
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(f"{ctx.author.mention} unmuted {user.mention}.")
         await ctx.send(f"Successfully unmuted {user.mention}.")
+
+    @commands.command(aliases=["devify"])
+    @commands.has_role("Cat Devs")
+    async def knight(self, ctx: commands.Context, user: discord.Member):
+        role = discord.utils.get(ctx.guild.roles, name="Cat Devs")
+        try:
+            await user.add_roles(role)
+            await ctx.send(f"Knighted {user.mention}.")
+            channel = self.bot.get_channel(Channels.modlog)
+            await channel.send(f"{ctx.author.mention} made {user.mention} a cat dev.")
+        except:
+            await ctx.send(f"Could not make {user.mention} a Cat Dev!")
 
 
 def setup(bot: commands.Bot):
