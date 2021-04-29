@@ -1,5 +1,4 @@
 from typing import Optional
-import string
 
 from discord.ext import commands
 import discord
@@ -55,11 +54,10 @@ class Help(commands.Cog):
                 name="Usage", value=f"`{bot.constants.PREFIX}{name} {usage}`"
             )
 
-            alphalist = list(string.ascii_lowercase)
-            if aliases not in alphalist:
-                pass
+            if len(aliases) != 0:
+                embed.add_field(name="Can also use", value=f"*{aliases}*", inline=False)
             else:
-                embed.add_field(name="Can also use", value=f"*{aliases}*")
+                pass
             await ctx.send(embed=embed)
 
 
