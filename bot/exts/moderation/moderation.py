@@ -200,7 +200,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"Knighted {user.mention}.")
             channel = self.bot.get_channel(Channels.modlog)
             await channel.send(f"{ctx.author.mention} made {user.mention} a cat dev.")
-        except:
+        except discord.Forbidden:
             await ctx.send(f"Could not make {user.mention} a Cat Dev!")
 
 
