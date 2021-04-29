@@ -193,6 +193,7 @@ class Moderation(commands.Cog):
     @commands.command(aliases=["devify"])
     @commands.has_role("Cat Devs")
     async def knight(self, ctx: commands.Context, user: discord.Member):
+        """Makes specified user a Cat Dev."""
         role = discord.utils.get(ctx.guild.roles, name="Cat Devs")
         try:
             await user.add_roles(role)
