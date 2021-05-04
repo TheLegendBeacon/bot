@@ -61,8 +61,7 @@ class Zen(commands.Cog):
     def make_line_embed(index, color):
         return discord.Embed(
             title=(
-                "The Zen of PyCat, line "
-                f"{19 - index * -1 if index < 0 else index}"
+                "The Zen of PyCat, line " f"{19 - index * -1 if index < 0 else index}"
             ),
             description=ZEN[index],
             color=color,
@@ -72,11 +71,7 @@ class Zen(commands.Cog):
     async def zencat(self, ctx: commands.Context, index: Optional[int]) -> None:
         """Sends a modified version of the python zen."""
 
-        rand_color = COLORS[
-            random.choice(
-                list(COLORS.keys())
-            )
-        ]
+        rand_color = COLORS[random.choice(list(COLORS.keys()))]
 
         if index is None:
             zen_embed = discord.Embed(

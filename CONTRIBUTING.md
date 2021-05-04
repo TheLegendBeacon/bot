@@ -1,7 +1,7 @@
 ## Pre-requisites:
  - [Python 3.8+](https://www.python.org/downloads/)
  - [Poetry](https://python-poetry.org/docs/)
- - [Git](https://git-scm.com/downloads)
+ - Some experience with [Git](https://git-scm.com/downloads)
  - [A GitHub Account](https://github.com/join)
  - Some knowledge of [discord.py](https://discordpy.readthedocs.io/en/stable/)
 
