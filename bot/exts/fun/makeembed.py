@@ -67,7 +67,7 @@ class makeembed(commands.Cog):
         while True:
             if fields < 6:
                 await ctx.send(
-                    f"Would you like to add an field? ({6 - fields} fields left) Answer Y or N"
+                    f"Would you like to add a field? ({6 - fields} fields left) Answer Y or N"
                 )
 
                 msg = await self.bot.wait_for("message", check=check)
@@ -111,7 +111,7 @@ class makeembed(commands.Cog):
                 break
 
         await ctx.send(
-            "Would you like an timestamp? Say `yes` or reply with something else for no"
+            "Would you like a timestamp? Say `yes` or reply with something else for no"
         )
         msg = await self.bot.wait_for("message", check=check)
         if msg.content == "yes":
