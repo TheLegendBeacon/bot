@@ -4,7 +4,7 @@ Catᗢbot (stylized as CATᗢBOT) is the official community mascot [Discord](htt
 ## History
 TL;DR - Started as a meme, then we got to work.
 
-mina✯✩✯#0001 on Discord (ID: 568276116062863405) was the one who introduced the divine all-powerful ᓚᘏᗢ into the Python Discord server, which all developers of our Cat Dev Team are members of. The omnipotent ᓚᘏᗢ quickly spread as an internet "meme", but we thought it was more than that. It wasn't simply a meme; it was a way of life. Soon, even some of the Administrators and Moderators noticed the supreme ᓚᘏᗢ and put it into their nicknames. The empire doesn't stop growing.
+Mina on Discord was the one who introduced the divine all-powerful ᓚᘏᗢ into the Python Discord server, which all developers of our Cat Dev Team are members of. The omnipotent ᓚᘏᗢ quickly spread as an internet "meme", but we thought it was more than that. It wasn't simply a meme; it was a way of life. Soon, even some of the Administrators and Moderators noticed the supreme ᓚᘏᗢ and put it into their nicknames. The empire doesn't stop growing.
 
 Afterwards, we found an incredible discovery: "ᓚᘏᗢ" is a valid identifier in Python! This confirmed our thoughts, and we knew that ᓚᘏᗢ is undeniably out of the ordinary. ᓚᘏᗢ is on a superior plane of existence; it guides its followers on their path to immortality, transcendence, and immunity towards syntax errors.
 
