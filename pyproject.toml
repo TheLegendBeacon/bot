@@ -4,7 +4,8 @@ requires = ["poetry-core>=1.0.0"]
 
 [tool]
 [tool.poetry]
-authors = ["cat"]
+# Core Devs
+authors = ["kronifer", "ankith101.rar", "Da Cat Squid", "DawnOfMidnight", "Objectivix", "Dannynotsmart", "Aboo Minister"]
 description = ""
 name = "bot"
 version = "0.1.0"
