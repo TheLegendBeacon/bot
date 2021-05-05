@@ -1,0 +1,8 @@
+poplangs:
+  Python:      "python3"
+  Rust:        "rust"
+  Javascript:  "javascript-node"
+  C:           "c-gcc"
+  Go:          "go"
+  C++:         "cpp-gcc"
+  Java:        "java-jdk"

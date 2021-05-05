@@ -3,32 +3,59 @@ import datetime
 import discord
 from discord.ext import commands
 import pytz
-import yaml
 
 from bot.utilities.tio import Tio
+from bot.utilities import get_yaml_val
 
 cst = pytz.timezone("US/Central")
 
-with open("config.yml", "r", encoding="utf-8") as file:
-    colors = yaml.load(file)["colors"]
+colors = get_yaml_val("config.yml", "colors")["colors"]
+poplangs = get_yaml_val("bot/resources/eval/poplangs.yml", "poplangs")["poplangs"]
+wrapping = get_yaml_val("bot/resources/eval/wrapping.yml", "wrapping")["wrapping"]
 
 
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.command(aliases=["elist", "el"])
+    async def evallist(self, ctx: commands.Context):
+        """Lists popular Eval languages."""
+        embed = discord.Embed(title="Popular Eval Languages", color=colors["green"])
+        for key, value in poplangs.items():
+            embed.add_field(name=key, value=value, inline=False)
+        await ctx.send(embed=embed)
+
     @commands.command(aliases=["e"])
     async def eval(
         self, ctx: commands.Context, language: str = "python3", *, code: str = None
     ):
-        """Evaluates code using tio.run."""
+        """Evaluates code using Tio.run.
+
+        If --wrapped is included before the code,
+        the command will try and wrap the given
+        code in a main function."""
         site = Tio()
-        if code.strip("`"):
-            # Code in message
+        if language in poplangs.keys():
+            language = poplangs.get(language)
+        if "```" in code:
             code = code.strip("`")
             first_line = code.splitlines()[0]
             if not language.startswith("```"):
                 code = code[len(first_line) + 1 :]
+        else:
+            pass
+            # Code in message
+        if code[0:9] == "--wrapped":
+            print("wow")
+            code = code[10:]
+            if language not in wrapping.keys():
+                await ctx.send("Language cannot be wrapped.")
+                return
+            else:
+                wrapstr = wrapping[language]
+                code = wrapstr.replace("code", code)
+
         request = site.new_request(language, code)
         raw = site.send(request)
         exitcode = int(raw[-1])

@@ -1,0 +1,6 @@
+wrapping:
+  c-gcc: "#include<stdio.h>\nint main() {code}"
+  cpp-gcc: "#include <iostream>\nint main() {code}"
+  java-jdk: "public class Main {public static void main(String[] args) {code}}"
+  rust: "fn main() {code}"
+  go: "package main\n import \"fmt\"\n func main() {code}"
