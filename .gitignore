@@ -8,4 +8,6 @@
 
 bot.egg-info/
 
-repl.deploy
+repl-deploy
+
+bot/exts/moderation/unmute_times.txt

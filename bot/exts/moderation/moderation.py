@@ -95,10 +95,6 @@ class Moderation(commands.Cog):
             except discord.Forbidden:
                 return await ctx.send("I have no permissions to make a muted role")
 
-        if muted_role in user.roles:
-            await ctx.send("This user is already muted!")
-            return
-
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(
             f"{ctx.author.mention} muted {user.mention} for `{time}` for reason `{reason}`."
@@ -181,6 +177,7 @@ class Moderation(commands.Cog):
         with open(UNMUTE_FILE, "r+") as f:
             data = json.load(f)
             del data[str(user.id)]
+            f.truncate(0)
             f.seek(0)
             json.dump(data, f)
 
