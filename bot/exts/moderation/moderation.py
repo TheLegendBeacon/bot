@@ -55,7 +55,11 @@ class Moderation(commands.Cog):
         #dm embed made here
         dm_message = discord.Embed(
             title = "**Infraction**: Ban",
-            description = f"You just got banned from the `{ctx.guild}` server.\n`reason:` {reason}\n`date and time:` {current_time} {current_date}",
+            description = (
+                f"You just got banned from the `{ctx.guild}` server.\n"
+                f"`reason:` {reason}\n"
+                f"`date and time:` {current_time} {current_date}"
+            )
             color = colors["light_blue"]
         )
 
@@ -132,7 +136,12 @@ class Moderation(commands.Cog):
         #dm embed made here
         dm_message = discord.Embed(
             title = "**Infraction**: Mute",
-            description = f"You just got muted from the `{ctx.guild}` server.\n`duration:` until {unmute_time}\n`reason:` {reason}\n`date and time:` {current_time} {current_date}",
+            description = (
+                f"You just got muted from the `{ctx.guild}` server.\n"
+                f"`duration:` until {unmute_time}\n"
+                f"`reason:` {reason}\n"
+                f"`date and time:` {current_time} {current_date}"
+            )
             color = colors["light_blue"]
         )
 
