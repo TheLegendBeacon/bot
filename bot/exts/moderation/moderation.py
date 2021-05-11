@@ -45,22 +45,22 @@ class Moderation(commands.Cog):
             await ctx.send("You can't ban yourself!")
             return
 
-        #gets current date and time; converts it with colons and slashes between then to make sense
+        # gets current date and time; converts it with colons and slashes between then to make sense
         current_time = datetime.now()
         current_time = current_time.strftime("%H:%M:%S")
 
         current_date = datetime.date()
         current_date = current_date.strftime("%d/%m/%y")
 
-        #dm embed made here
+        # dm embed made here
         dm_message = discord.Embed(
-            title = "**Infraction**: Ban",
-            description = (
+            title="**Infraction**: Ban",
+            description=(
                 f"You just got banned from the `{ctx.guild}` server.\n"
                 f"`reason:` {reason}\n"
                 f"`date and time:` {current_time} {current_date}"
-            )
-            color = colors["light_blue"]
+            ),
+            color=colors["light_blue"],
         )
 
         await user.dm_channel.send(embed=dm_message)
@@ -126,23 +126,23 @@ class Moderation(commands.Cog):
 
         await user.add_roles(muted_role)
 
-        #gets current date and time; converts it with colons and slashes between then to make sense
+        # gets current date and time; converts it with colons and slashes between then to make sense
         current_time = datetime.now()
         current_time = current_time.strftime("%H:%M:%S")
 
         current_date = datetime.date()
         current_date = current_date.strftime("%d/%m/%y")
 
-        #dm embed made here
+        # dm embed made here
         dm_message = discord.Embed(
-            title = "**Infraction**: Mute",
-            description = (
+            title="**Infraction**: Mute",
+            description=(
                 f"You just got muted from the `{ctx.guild}` server.\n"
                 f"`duration:` until {unmute_time}\n"
                 f"`reason:` {reason}\n"
                 f"`date and time:` {current_time} {current_date}"
-            )
-            color = colors["light_blue"]
+            ),
+            color=colors["light_blue"],
         )
 
         await user.dm_channel.send(embed=dm_message)
