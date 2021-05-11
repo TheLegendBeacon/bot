@@ -226,6 +226,14 @@ class Moderation(commands.Cog):
 
         await user.remove_roles(muted_role)
 
+        dm_message = discord.Embed(
+            title="Unmuted.",
+            description="You are now allowed to send messages in the server.",
+            color=colors["light_blue"],
+        )
+
+        await user.dm_channel.send(embed=dm_message)
+
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(f"{ctx.author.mention} unmuted {user.mention}.")
         await ctx.send(f"Successfully unmuted {user.mention}.")
