@@ -21,6 +21,7 @@ UNMUTE_FILE = os.path.join(
 
 colors = get_yaml_val("config.yml", "colors")["colors"]
 
+
 class Moderation(commands.Cog):
     """Cog for moderation commands."""
 
