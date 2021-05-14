@@ -19,6 +19,8 @@ UNMUTE_FILE = os.path.join(
     "unmute_times.txt",
 )
 
+colors = get_yaml_val("config.yml", "colors")["colors"]
+
 
 class Moderation(commands.Cog):
     """Cog for moderation commands."""
@@ -44,6 +46,26 @@ class Moderation(commands.Cog):
         if user == ctx.author:
             await ctx.send("You can't ban yourself!")
             return
+
+        # gets current date and time; converts it with colons and slashes between then to make sense
+        current_time = datetime.now()
+        current_time = current_time.strftime("%H:%M:%S")
+
+        current_date = datetime.date()
+        current_date = current_date.strftime("%d/%m/%y")
+
+        # dm embed made here
+        dm_message = discord.Embed(
+            title="**Infraction**: Ban",
+            description=(
+                f"You just got banned from the `{ctx.guild}` server.\n"
+                f"`reason:` {reason}\n"
+                f"`date and time:` {current_time} {current_date}"
+            ),
+            color=colors["light_blue"],
+        )
+
+        await user.dm_channel.send(embed=dm_message)
 
         await ctx.guild.ban(user)
         await ctx.send(f"Successfully banned {user.name}")
@@ -105,6 +127,27 @@ class Moderation(commands.Cog):
         )
 
         await user.add_roles(muted_role)
+
+        # gets current date and time; converts it with colons and slashes between then to make sense
+        current_time = datetime.now()
+        current_time = current_time.strftime("%H:%M:%S")
+
+        current_date = datetime.date()
+        current_date = current_date.strftime("%d/%m/%y")
+
+        # dm embed made here
+        dm_message = discord.Embed(
+            title="**Infraction**: Mute",
+            description=(
+                f"You just got muted from the `{ctx.guild}` server.\n"
+                f"`duration:` until {unmute_time}\n"
+                f"`reason:` {reason}\n"
+                f"`date and time:` {current_time} {current_date}"
+            ),
+            color=colors["light_blue"],
+        )
+
+        await user.dm_channel.send(embed=dm_message)
 
         json_input = {user.id: unmute_time.timestamp()}
         try:
@@ -182,6 +225,14 @@ class Moderation(commands.Cog):
             json.dump(data, f)
 
         await user.remove_roles(muted_role)
+
+        dm_message = discord.Embed(
+            title="Unmuted.",
+            description="You are now allowed to send messages in the server.",
+            color=colors["light_blue"],
+        )
+
+        await user.dm_channel.send(embed=dm_message)
 
         channel = self.bot.get_channel(Channels.modlog)
         await channel.send(f"{ctx.author.mention} unmuted {user.mention}.")
