@@ -1,10 +1,13 @@
 bot:
   prefix:      "c!"
-  purge_limit: 200 
+  purge_limit: 200
+  token: "TokenGoesHere"
+  extpath: "bot/exts"
+  bot_repo_url: "https://github.com/cat-dev-group/bot"
 
   status:
     type: "LISTENING"
-    text: "for commands. | c!help"
+    text: "Commands | {}help"
 
 colors:
   red:          0xFF0000
@@ -76,4 +79,24 @@ cats:
   - "ᘣᘏᗢ"
   - "ᕦᘏᗢ"
   - "ᕂᘏᗢ"
+
+necative:
+  - "Nah mate, this ain't gonna work."
+  - "**MEOW** nope **MEOW**"
+  - "Unpoggers."
+  - "DA DIVINE CAT says you can't."
+  - "Not in a million cat years."
+  - "Yeah, no."
+  - "<command cannot be executed>"
+  - "Error code: 3120"
+
+duration:
+  s: 1
+  m: 60
+  h: 3600
+  d: 86400
+  w: 604800
+  M: 2592000
+  y: 31536000
+  D: 315360000
   

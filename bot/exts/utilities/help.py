@@ -4,9 +4,10 @@ from discord.ext import commands
 import discord
 
 from bot.utilities import get_yaml_val
-import bot.constants
 
-colors = get_yaml_val("config.yml", "colors")["colors"]
+colors = get_yaml_val("bot/config.yml", "colors")["colors"]
+
+PREFIX = get_yaml_val("bot/config.yml", "bot")["bot"]["prefix"]
 
 
 class Help(commands.Cog):
@@ -22,7 +23,7 @@ class Help(commands.Cog):
             embed = discord.Embed(
                 title="Help: All",
                 description=f"A detailed list of all commands. For help on a specific command, "
-                f"do `{bot.constants.PREFIX}help [command]`.",
+                f"do `{PREFIX}help [command]`.",
                 color=colors["light_blue"],
             )
 
@@ -50,9 +51,7 @@ class Help(commands.Cog):
             )
 
             aliases = ", ".join(alias_list)
-            embed.add_field(
-                name="Usage", value=f"`{bot.constants.PREFIX}{name} {usage}`"
-            )
+            embed.add_field(name="Usage", value=f"`{PREFIX}{name} {usage}`")
 
             if len(aliases) != 0:
                 embed.add_field(name="Can also use", value=f"*{aliases}*", inline=False)

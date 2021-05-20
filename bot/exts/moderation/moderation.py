@@ -1,16 +1,18 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import json
 import os
 
 import discord
 from discord.ext import commands, tasks
 
-from bot.constants import Channels
-from bot.constants import DURATION_DICT
 
 from bot.utilities import get_yaml_val
 
-GUILD_ID = get_yaml_val("config.yml", "guild.id")
+GUILD_ID = get_yaml_val("bot/config.yml", "guild.id")
+
+Channels = get_yaml_val("bot/config.yml", "guild")["guild"]["channels"]
+
+DURATION_DICT = get_yaml_val("bot/config.yml", "duration")["duration"]
 
 UNMUTE_FILE = os.path.join(
     "bot",
@@ -19,7 +21,7 @@ UNMUTE_FILE = os.path.join(
     "unmute_times.txt",
 )
 
-colors = get_yaml_val("config.yml", "colors")["colors"]
+colors = get_yaml_val("bot/config.yml", "colors")["colors"]
 
 
 class Moderation(commands.Cog):
@@ -30,7 +32,7 @@ class Moderation(commands.Cog):
         self.unmute_check.start()
 
     @commands.command(aliases=["exile"])
-    @commands.has_role("Cat Devs")
+    @commands.has_role(833841708805652481)
     async def pban(
         self,
         ctx: commands.Context,
@@ -51,7 +53,7 @@ class Moderation(commands.Cog):
         current_time = datetime.now()
         current_time = current_time.strftime("%H:%M:%S")
 
-        current_date = datetime.date()
+        current_date = date()
         current_date = current_date.strftime("%d/%m/%y")
 
         # dm embed made here
@@ -65,18 +67,18 @@ class Moderation(commands.Cog):
             color=colors["light_blue"],
         )
 
-        await user.dm_channel.send(embed=dm_message)
+        await user.send(embed=dm_message)
 
         await ctx.guild.ban(user)
         await ctx.send(f"Successfully banned {user.name}")
 
-        channel = self.bot.get_channel(Channels.modlog)
+        channel = self.bot.get_channel(Channels["mod_log"])
         await channel.send(
             f"{ctx.author.mention} banned {user.mention} for reason `{reason}`."
         )
 
     @commands.command(aliases=(["s" + "h" * i for i in range(1, 10)] + ["shut"]))
-    @commands.has_role("Cat Devs")
+    @commands.has_role(833841708805652481)
     async def mute(
         self,
         ctx: commands.Context,
@@ -117,7 +119,7 @@ class Moderation(commands.Cog):
             except discord.Forbidden:
                 return await ctx.send("I have no permissions to make a muted role")
 
-        channel = self.bot.get_channel(Channels.modlog)
+        channel = self.bot.get_channel(Channels["mod_log"])
         await channel.send(
             f"{ctx.author.mention} muted {user.mention} for `{time}` for reason `{reason}`."
         )
@@ -132,11 +134,11 @@ class Moderation(commands.Cog):
         current_time = datetime.now()
         current_time = current_time.strftime("%H:%M:%S")
 
-        current_date = datetime.date()
+        current_date = datetime.today()
         current_date = current_date.strftime("%d/%m/%y")
 
         # dm embed made here
-        dm_message = discord.Embed(
+        embed = discord.Embed(
             title="**Infraction**: Mute",
             description=(
                 f"You just got muted from the `{ctx.guild}` server.\n"
@@ -147,7 +149,7 @@ class Moderation(commands.Cog):
             color=colors["light_blue"],
         )
 
-        await user.dm_channel.send(embed=dm_message)
+        await user.send(embed=embed)
 
         json_input = {user.id: unmute_time.timestamp()}
         try:
@@ -160,7 +162,7 @@ class Moderation(commands.Cog):
                 json.dump(json_input, new_f)
 
     @commands.command(aliases=["yeetmsg"])
-    @commands.has_role("Cat Devs")
+    @commands.has_role(833841708805652481)
     async def purge(
         self, ctx: commands.Context, limit: int, *, reason: str = None
     ) -> None:
@@ -172,7 +174,7 @@ class Moderation(commands.Cog):
 
         await ctx.channel.purge(limit=limit)
 
-        channel = self.bot.get_channel(Channels.modlog)
+        channel = self.bot.get_channel(Channels["mod_log"])
         await channel.send(
             f"{ctx.message.author.mention} purged at most `{limit}` messages for reason `{reason}`."
         )
@@ -208,7 +210,7 @@ class Moderation(commands.Cog):
             json.dump(data, f)
 
     @commands.command(aliases=["pardon"])
-    @commands.has_role("Cat Devs")
+    @commands.has_role(833841708805652481)
     async def unmute(self, ctx: commands.Context, user: discord.Member):
         """Unmutes mentioned user."""
         muted_role = discord.utils.get(ctx.guild.roles, name="Suppressed")
@@ -232,21 +234,21 @@ class Moderation(commands.Cog):
             color=colors["light_blue"],
         )
 
-        await user.dm_channel.send(embed=dm_message)
+        await user.send(embed=dm_message)
 
-        channel = self.bot.get_channel(Channels.modlog)
+        channel = self.bot.get_channel(Channels["mod_log"])
         await channel.send(f"{ctx.author.mention} unmuted {user.mention}.")
         await ctx.send(f"Successfully unmuted {user.mention}.")
 
     @commands.command(aliases=["devify"])
-    @commands.has_role("Cat Devs")
+    @commands.has_role(833841708805652481)
     async def knight(self, ctx: commands.Context, user: discord.Member):
         """Makes specified user a Cat Dev."""
-        role = discord.utils.get(ctx.guild.roles, name="Cat Devs")
+        role = discord.utils.get(ctx.guild.roles, id=833841708805652481)
         try:
             await user.add_roles(role)
             await ctx.send(f"Knighted {user.mention}.")
-            channel = self.bot.get_channel(Channels.modlog)
+            channel = self.bot.get_channel(Channels["mod_log"])
             await channel.send(f"{ctx.author.mention} made {user.mention} a cat dev.")
         except discord.Forbidden:
             await ctx.send(f"Could not make {user.mention} a Cat Dev!")

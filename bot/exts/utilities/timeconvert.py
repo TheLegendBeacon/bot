@@ -6,9 +6,10 @@ from discord.ext import commands
 import discord
 
 from bot.utilities import get_yaml_val
-from bot.constants import DURATION_DICT
 
-colors = get_yaml_val("config.yml", "colors")["colors"]
+colors = get_yaml_val("bot/config.yml", "colors")["colors"]
+
+DURATION_DICT = get_yaml_val("bot/config.yml", "duration")["duration"]
 
 
 class Times(commands.Cog):

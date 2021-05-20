@@ -11,3 +11,5 @@ bot.egg-info/
 repl-deploy
 
 bot/exts/moderation/unmute_times.txt
+
+bot/config.yml

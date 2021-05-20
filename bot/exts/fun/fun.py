@@ -9,7 +9,7 @@ from bot.utilities import get_yaml_val
 
 cst = pytz.timezone("US/Central")
 
-colors = get_yaml_val("config.yml", "colors")["colors"]
+colors = get_yaml_val("bot/config.yml", "colors")["colors"]
 poplangs = get_yaml_val("bot/resources/eval/poplangs.yml", "poplangs")["poplangs"]
 wrapping = get_yaml_val("bot/resources/eval/wrapping.yml", "wrapping")["wrapping"]
 

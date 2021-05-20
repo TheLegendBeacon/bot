@@ -4,6 +4,7 @@
  - Some experience with [Git](https://git-scm.com/downloads)
  - [A GitHub Account](https://github.com/join)
  - Some knowledge of [discord.py](https://discordpy.readthedocs.io/en/stable/)
+ - Some previous knowledge of [yaml](https://yaml.org/spec/1.2/spec.html) if you will be adding constants to the bot.
 
 ## Installation Steps:
 1. Head over to https://github.com/cat-dev-group/bot
@@ -16,11 +17,12 @@
 ## Contributing:
 1. Run `poetry shell` to initialize the virtual environment and `poetry install` to update dependencies.
 2. Create a new branch for whatever you're working on with `git checkout -b branch-name`, where `branch-name` describes what the end-goal is in 2-3 words.
-3. Make your changes. You'll usually be adding new cogs in the `bot/exts` directory.
-4. Run `git add .` to stage your changes.
-5. Run `git commit -m "commit message"` to commit your changes. Keep the commit title short and descriptive.
-6. Run `git push -u origin branch-name` to push your changes to the remote repo (on your GitHub).
-7. When you're done, create a pull-request on the repo. Your code will be reviewed and when ready, it will be merged. 
+3. Copy the `config-default.yml` file into the bot directory and rename it to `config.yml`. 
+5. Make your changes. You'll usually be adding new cogs in the `bot/exts` directory. 
+6. Run `git add .` to stage your changes.
+7. Run `git commit -m "commit message"` to commit your changes. Keep the commit title short and descriptive.
+8. Run `git push -u origin branch-name` to push your changes to the remote repo (on your GitHub).
+9. When you're done, create a pull-request on the repo. Your code will be reviewed and when ready, it will be merged. 
 
 ## Additional Notes:
 1. If you're adding dependencies, use `poetry add package-name` instead of the usual `pip install package-name`.
@@ -30,5 +32,5 @@
 ## Testing:
 1. You would need your own discord bot for testing. Create one from the [Discord Developer Portal](https://discord.com/developers/applications) if you haven't already.
 2. Create a test server on discord,  and add your bot there.
-3. Add your bot token and prefix in the `.env` file.
+3. Add your bot token and prefix in the `config.yml` file you created in the Contributing section.
 4. Run the bot with `poetry run python -m bot`.
