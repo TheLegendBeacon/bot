@@ -31,6 +31,18 @@ class Moderation(commands.Cog):
         self.bot = bot
         self.unmute_check.start()
 
+    @commands.command()
+    @commands.has_role(833841708805652481)
+    async def unban(self, ctx: commands.Context, user: discord.User = None):
+        if user is None:
+            await ctx.send("You need to specify a user!")
+            return
+        await ctx.guild.unban(user)
+
+        channel = self.bot.get_channel(Channels["mod_log"])
+
+        await channel.send(f"{ctx.author.mention} unbanned {user.mention}.")
+
     @commands.command(aliases=["exile"])
     @commands.has_role(833841708805652481)
     async def pban(
@@ -53,7 +65,7 @@ class Moderation(commands.Cog):
         current_time = datetime.now()
         current_time = current_time.strftime("%H:%M:%S")
 
-        current_date = date()
+        current_date = datetime.today()
         current_date = current_date.strftime("%d/%m/%y")
 
         # dm embed made here

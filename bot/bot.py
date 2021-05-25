@@ -106,9 +106,9 @@ class Bot(commands.Bot):
             embed = Embed(
                 title=f"Exception in command {ctx.command}:", color=COLORS["red"]
             )
-            if len("".join(traceback.format_tb(error.__traceback__))) > 500:
+            if len("".join(traceback.format_tb(error.__traceback__))) > 1000:
                 newerror = "".join(traceback.format_tb(error.__traceback__))
-                newerror = newerror[:500]
+                newerror = newerror[:1000]
                 newerror += "..."
                 embed.description = f"```{newerror}```"
                 embed.set_footer(text="Truncated... Too long.")

@@ -12,6 +12,7 @@ cst = pytz.timezone("US/Central")
 colors = get_yaml_val("bot/config.yml", "colors")["colors"]
 poplangs = get_yaml_val("bot/resources/eval/poplangs.yml", "poplangs")["poplangs"]
 wrapping = get_yaml_val("bot/resources/eval/wrapping.yml", "wrapping")["wrapping"]
+syntaxexts = get_yaml_val("bot/resources/eval/syntaxexts.yml", "exts")["exts"]
 
 
 class Fun(commands.Cog):
@@ -36,25 +37,35 @@ class Fun(commands.Cog):
         the command will try and wrap the given
         code in a main function."""
         site = Tio()
+
         if language in poplangs.keys():
             language = poplangs.get(language)
-        if "```" in code:
-            code = code.strip("`")
-            first_line = code.splitlines()[0]
-            if not language.startswith("```"):
-                code = code[len(first_line) + 1 :]
-        else:
-            pass
             # Code in message
+
         if code[0:9] == "--wrapped":
-            print("wow")
+            print("cool")
             code = code[10:]
+            print(code)
             if language not in wrapping.keys():
                 await ctx.send("Language cannot be wrapped.")
                 return
             else:
                 wrapstr = wrapping[language]
                 code = wrapstr.replace("code", code)
+
+        if "```" in code:
+            code = code.replace("`", "")
+            print(code)
+            for element in syntaxexts:
+                code = code.replace(element, "")
+                print(code)
+
+            first_line = code.splitlines()[0]
+            if not language.startswith("```"):
+                code = code[len(first_line) + 1 :]
+        else:
+            pass
+
 
         request = site.new_request(language, code)
         raw = site.send(request)
