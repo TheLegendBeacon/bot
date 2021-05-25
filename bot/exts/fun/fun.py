@@ -66,7 +66,6 @@ class Fun(commands.Cog):
         else:
             pass
 
-
         request = site.new_request(language, code)
         raw = site.send(request)
         exitcode = int(raw[-1])
