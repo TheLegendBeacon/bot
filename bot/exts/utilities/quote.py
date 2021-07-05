@@ -5,6 +5,7 @@ from bot.utilities import get_yaml_val
 
 quotechannel = get_yaml_val("bot/config.yml", 'guild')['guild']["channels"]["quotes"]
 
+
 class Quote(commands.Cog):
     """Cog for the quote command."""
 
@@ -18,6 +19,7 @@ class Quote(commands.Cog):
         channel = self.bot.get_channel(quotechannel)
         await channel.send(f"{user.mention}: {quote}")
         await ctx.send("Successfully quoted message.")
+
 
 def setup(bot: commands.Bot):
     """Loads the quote cog."""
