@@ -15,7 +15,4 @@ jobs:
       - name: pull changes from remote and restart job
         run: |
           mkdir ~/.ssh && touch ~/.ssh/known_hosts && echo ${{ secrets.KNOWN_HOSTS }} >> ~/.ssh/known_hosts
-          sshpass -p ${{ secrets.SSHPASS }} ssh -o "StrictHostKeyChecking no" -tt ${{ secrets.SSH }}
-          cd bot
-          git pull origin main
-          systemctl restart catbot
+          sshpass -p ${{ secrets.SSHPASS }} ssh -o "StrictHostKeyChecking no" -tt ${{ secrets.SSH }} - t "cd bot && git pull origin main && systemctl restart catbot"
