@@ -27,7 +27,7 @@ class Quote(commands.Cog):
     async def activate(self, ctx: commands.Context, id: discord.TextChannel):
         "Used to dynamically change the specified channel name on a regular basis by randomly selecting a quote from quotes.json"
         while True:
-            with open(r'bot/resources/quotes.json') as f:
+            with open('bot/resources/quote.json', 'r+') as f:
                 fil = json.load(f)
             sen = random.choice(fil['quotes'])
             by = fil['authors'][fil['quotes'].index(sen)]
@@ -37,7 +37,7 @@ class Quote(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.channel.id == 809158704644751370:
-            with open(r'bot/bot/resources/quotes.json') as f:
+            with open('bot/resources/quote.json', 'r+') as f:
                 fil = json.load(f)
             res = ''
             for i in re.compile(r'[^<@!\d+>]').finditer(message.content):
