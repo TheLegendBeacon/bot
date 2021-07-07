@@ -45,7 +45,7 @@ class Quote(commands.Cog):
             name = self.bot.get_user(message.author.id).name
             fil['quotes'].append(res)
             fil['authors'].append(name)
-            with open(r'catcord.json', 'w+') as f:
+            with open('bot/resources/quote.json', 'w+') as f:
                 json.dump(fil, f)
 
 
