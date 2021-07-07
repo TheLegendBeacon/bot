@@ -1,0 +1,21 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Check out Repository
+        uses: actions/checkout@v2
+      - name: pull changes from remote and restart job
+        run: |
+        sudo apt install -y sshpass
+        sshpass -p ${{ secrets.SSHPASS }} ssh ${{ secrets.SSH }}
+        cd bot
+        git pull origin main
+        systemctl restart catbot
