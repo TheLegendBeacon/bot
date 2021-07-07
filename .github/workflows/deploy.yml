@@ -14,7 +14,6 @@ jobs:
         uses: actions/checkout@v2
       - name: pull changes from remote and restart job
         run: |
-          sudo apt install -y sshpass
           sshpass -p ${{ secrets.SSHPASS }} ssh -tt ${{ secrets.SSH }}
           cd bot
           git pull origin main
