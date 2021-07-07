@@ -25,7 +25,7 @@ class Quote(commands.Cog):
     @commands.command("activate")
     @commands.has_any_role(833841708805652481, 852267769985761281, 839844083463749664)
     async def activate(self, ctx: commands.Context, id: discord.TextChannel):
-        "Used to dynamically change the specified channel name on a regular basis by randomly selecting a quote from quotes.json"
+        "Used to change the specified channel name on a regular basis by selecting a quote from quotes.json"
         while True:
             with open('bot/resources/quote.json', 'r+') as f:
                 fil = json.load(f)
