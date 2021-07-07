@@ -15,7 +15,7 @@ jobs:
       - name: pull changes from remote and restart job
         run: |
           sudo apt install -y sshpass
-          sshpass -p ${{ secrets.SSHPASS }} ssh ${{ secrets.SSH }}
+          sshpass -p ${{ secrets.SSHPASS }} ssh -tt ${{ secrets.SSH }}
           cd bot
           git pull origin main
           systemctl restart catbot
