@@ -54,7 +54,8 @@ class Catify(commands.Cog):
             if len(text) >= 1500:
                 embed = Embed(
                     title=random.choice(NECATIVE_REPLIES),
-                    description="Submitted text was too large! Please submit something under 1500 characters.",
+                    description="Submitted text was too large! \
+                      Please submit something under 1500 characters.",
                     color=COLORS["orange"],
                 )
                 await ctx.send(embed=embed)

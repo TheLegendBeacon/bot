@@ -121,10 +121,11 @@ class makeembed(commands.Cog):
 
         perms = (ctx.author).guild_permissions
 
-        if perms.administrator == True:
+        if perms.administrator:
 
             await ctx.send(
-                "Would you like to send the embed somewhere else? (say `yes` or reply something else to not do it)"
+                "Would you like to send the embed somewhere else? \
+                  (say `yes` or reply something else to not do it)"
             )
             msg = await self.bot.wait_for("message", check=check)
 

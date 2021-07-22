@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 from .utilities import get_yaml_val
 
-load_dotenv(dotenv_path=pathlib.Path('.env'))
+load_dotenv(dotenv_path=pathlib.Path(".env"))
 
 PREFIX = get_yaml_val("config.yml", "bot")["bot"]["prefix"]
 EXTPATH = get_yaml_val("config.yml", "bot")["bot"]["extpath"]

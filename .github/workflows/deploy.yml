@@ -12,7 +12,8 @@ jobs:
     steps:
       - name: Check out Repository
         uses: actions/checkout@v2
-      - name: pull changes from remote and restart job
+        
+      - name: Pull Changes and Restart Job
         run: |
           mkdir ~/.ssh && touch ~/.ssh/known_hosts && echo ${{ secrets.KNOWN_HOSTS }} >> ~/.ssh/known_hosts
           sshpass -p ${{ secrets.SSHPASS }} ssh -o "StrictHostKeyChecking no" -tt ${{ secrets.SSH }} -t "cd bot && git pull origin main && systemctl restart catbot"

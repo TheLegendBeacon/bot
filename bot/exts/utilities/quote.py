@@ -5,7 +5,8 @@ import random
 import asyncio
 from bot.utilities import get_yaml_val
 import re
-quotechannel = get_yaml_val("config.yml", 'guild')['guild']["channels"]["quotes"]
+
+quotechannel = get_yaml_val("config.yml", "guild")["guild"]["channels"]["quotes"]
 
 
 class Quote(commands.Cog):
@@ -25,27 +26,32 @@ class Quote(commands.Cog):
     @commands.command("activate")
     @commands.has_any_role(833841708805652481, 852267769985761281, 839844083463749664)
     async def activate(self, ctx: commands.Context, id: discord.TextChannel):
-        "Used to change the specified channel name on a regular basis by selecting a quote from quotes.json"
+        """
+        Used to change the specified channel name on a
+        regular basis by selecting a quote from quotes.json
+        """
         while True:
-            with open('bot/resources/quote.json', 'r+') as f:
+            with open("bot/resources/quote.json", "r+") as f:
                 fil = json.load(f)
-            sen = random.choice(fil['quotes'])
-            by = fil['authors'][fil['quotes'].index(sen)]
-            await id.edit(name=f'ᗢ-ot-{sen[:100]}', topic=f'-By {by} Off-topic discussion.')
+            sen = random.choice(fil["quotes"])
+            by = fil["authors"][fil["quotes"].index(sen)]
+            await id.edit(
+                name=f"ᗢ-ot-{sen[:100]}", topic=f"-By {by} Off-topic discussion."
+            )
             await asyncio.sleep(86400)
 
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.channel.id == 809158704644751370:
-            with open('bot/resources/quote.json', 'r+') as f:
+            with open("bot/resources/quote.json", "r+") as f:
                 fil = json.load(f)
-            res = ''
-            for i in re.compile(r'[^<@!\d+>]').finditer(message.content):
+            res = ""
+            for i in re.compile(r"[^<@!\d+>]").finditer(message.content):
                 res += i.group(0)
             name = self.bot.get_user(message.author.id).name
-            fil['quotes'].append(res)
-            fil['authors'].append(name)
-            with open('bot/resources/quote.json', 'w+') as f:
+            fil["quotes"].append(res)
+            fil["authors"].append(name)
+            with open("bot/resources/quote.json", "w+") as f:
                 json.dump(fil, f)
 
 
