@@ -6,19 +6,22 @@ from aiohttp import ClientSession
 from discord import Embed, Intents, ActivityType, Activity, HTTPException, utils
 from discord.ext import commands
 from loguru import logger
+from dotenv import load_dotenv
 
 from .utilities import get_yaml_val
 
-PREFIX = get_yaml_val("bot/config.yml", "bot")["bot"]["prefix"]
-EXTPATH = get_yaml_val("bot/config.yml", "bot")["bot"]["extpath"]
-TOKEN = get_yaml_val("bot/config.yml", "bot")["bot"]["token"]
-BOT_REPO_URL = get_yaml_val("bot/config.yml", "bot")["bot"]["bot_repo_url"]
-CHANNELS = get_yaml_val("bot/config.yml", "guild")["guild"]["channels"]
-STATUS = get_yaml_val("bot/config.yml", "bot")["bot"]["status"]["text"].replace(
+load_dotenv(dotenv_path=pathlib.Path(".env"))
+
+PREFIX = get_yaml_val("config.yml", "bot")["bot"]["prefix"]
+EXTPATH = get_yaml_val("config.yml", "bot")["bot"]["extpath"]
+TOKEN = os.getenv("TOKEN")
+BOT_REPO_URL = get_yaml_val("config.yml", "bot")["bot"]["bot_repo_url"]
+CHANNELS = get_yaml_val("config.yml", "guild")["guild"]["channels"]
+STATUS = get_yaml_val("config.yml", "bot")["bot"]["status"]["text"].replace(
     "{}", PREFIX
 )
-COLORS = get_yaml_val("bot/config.yml", "colors")["colors"]
-ROLES = get_yaml_val("bot/config.yml", "guild")["guild"]["roles"]
+COLORS = get_yaml_val("config.yml", "colors")["colors"]
+ROLES = get_yaml_val("config.yml", "guild")["guild"]["roles"]
 
 EXTPATH = pathlib.Path(EXTPATH)
 

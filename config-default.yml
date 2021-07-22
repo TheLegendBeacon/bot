@@ -1,7 +1,6 @@
 bot:
-  prefix:      "c!"
+  prefix:      "--"
   purge_limit: 200
-  token: "TokenGoesHere"
   extpath: "bot/exts"
   bot_repo_url: "https://github.com/cat-dev-group/bot"
 

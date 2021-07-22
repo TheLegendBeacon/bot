@@ -1,0 +1,46 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+    name: flake8
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python Environment
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.9"
+
+      - name: Setup Poetry
+        run: python -m pip install -U poetry
+
+      - name: Install Dependencies
+        run: poetry install
+      
+      - name: Run flake8
+        run: poetry run task lint
+  
+  black:
+    runs-on: ubuntu-latest
+    name: Black
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python Environment
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.9"
+
+      - name: Setup Poetry
+        run: python -m pip install -U poetry
+
+      - name: Install Dependencies
+        run: poetry install
+      
+      - name: Black
+        run: poetry run black --check .

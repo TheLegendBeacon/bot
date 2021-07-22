@@ -7,10 +7,10 @@ from discord.ext import commands
 
 from bot.utilities import get_yaml_val
 
-COLORS = get_yaml_val("bot/config.yml", "colors")["colors"]
-CATS = get_yaml_val("bot/config.yml", "cats")["cats"]
+COLORS = get_yaml_val("config.yml", "colors")["colors"]
+CATS = get_yaml_val("config.yml", "cats")["cats"]
 
-NECATIVE_REPLIES = get_yaml_val("bot/config.yml", "necative")["necative"]
+NECATIVE_REPLIES = get_yaml_val("config.yml", "necative")["necative"]
 
 
 class Catify(commands.Cog):
@@ -54,7 +54,8 @@ class Catify(commands.Cog):
             if len(text) >= 1500:
                 embed = Embed(
                     title=random.choice(NECATIVE_REPLIES),
-                    description="Submitted text was too large! Please submit something under 1500 characters.",
+                    description="Submitted text was too large! \
+                      Please submit something under 1500 characters.",
                     color=COLORS["orange"],
                 )
                 await ctx.send(embed=embed)

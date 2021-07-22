@@ -17,12 +17,12 @@
 ## Contributing:
 1. Run `poetry shell` to initialize the virtual environment and `poetry install` to update dependencies.
 2. Create a new branch for whatever you're working on with `git checkout -b branch-name`, where `branch-name` describes what the end-goal is in 2-3 words.
-3. Copy the `config-default.yml` file into the bot directory and rename it to `config.yml`. 
-5. Make your changes. You'll usually be adding new cogs in the `bot/exts` directory. 
-6. Run `git add .` to stage your changes.
-7. Run `git commit -m "commit message"` to commit your changes. Keep the commit title short and descriptive.
-8. Run `git push -u origin branch-name` to push your changes to the remote repo (on your GitHub).
-9. When you're done, create a pull-request on the repo. Your code will be reviewed and when ready, it will be merged. 
+3. Copy the `config-default.yml` file  and rename it to `config.yml`. 
+4. Make your changes. You'll usually be adding new cogs in the `bot/exts` directory. 
+5. Run `git add .` to stage your changes.
+6. Run `git commit -m "commit message"` to commit your changes. Keep the commit title short and descriptive.
+7. Run `git push -u origin branch-name` to push your changes to the remote repo (on your GitHub).
+8. When you're done, create a pull-request on the repo. Your code will be reviewed and when ready, it will be merged. 
 
 ## Additional Notes:
 1. If you're adding dependencies, use `poetry add package-name` instead of the usual `pip install package-name`.

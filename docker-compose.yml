@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_DB=catbot
+      - POSTGRES_USER=catbot
+      - POSTGRES_PASSWORD=catbot  
+  bot:
+    build: .
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:

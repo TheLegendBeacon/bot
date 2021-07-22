@@ -7,12 +7,12 @@ from discord.utils import escape_markdown
 
 from bot.utilities import get_yaml_val
 
-Colors = get_yaml_val("bot/config.yml", "colors")["colors"]
+Colors = get_yaml_val("config.yml", "colors")["colors"]
 
 URL = "https://pypi.org/pypi/{package}/json"
 PYPI_ICON = "https://cdn.discordapp.com/emojis/766274397257334814.png"
 
-NECATIVE = get_yaml_val("bot/config.yml", "necative")["necative"]
+NECATIVE = get_yaml_val("config.yml", "necative")["necative"]
 
 pycolors = itertools.cycle((Colors["yellow"], Colors["blue"]))
 

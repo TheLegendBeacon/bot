@@ -9,7 +9,7 @@ from bot.utilities import get_yaml_val
 
 cst = pytz.timezone("US/Central")
 
-colors = get_yaml_val("bot/config.yml", "colors")["colors"]
+colors = get_yaml_val("config.yml", "colors")["colors"]
 poplangs = get_yaml_val("bot/resources/eval/poplangs.yml", "poplangs")["poplangs"]
 wrapping = get_yaml_val("bot/resources/eval/wrapping.yml", "wrapping")["wrapping"]
 syntaxexts = get_yaml_val("bot/resources/eval/syntaxexts.yml", "exts")["exts"]
@@ -73,7 +73,8 @@ class Fun(commands.Cog):
         if exitcode == 0:
             embed = discord.Embed(
                 title="Eval Results",
-                description=f":white_check_mark:  Your {language} job has completed with exit code {exitcode}.",
+                description=f":white_check_mark:  Your {language} \
+                job has completed with exit code {exitcode}.",
                 color=colors["green"],
             )
         else:
@@ -100,7 +101,8 @@ class Fun(commands.Cog):
                 file = jsondata.get("file")
             embed = discord.Embed(
                 title="Ducky Time!",
-                description="A duck or manduck from [Quackstack](https://quackstack.pydis.org/docs).",
+                description="A duck or manduck from \
+                  [Quackstack](https://quackstack.pydis.org/docs).",
                 color=colors["green"],
             )
             embed.set_image(url=f"https://quackstack.pythondiscord.com{file}")

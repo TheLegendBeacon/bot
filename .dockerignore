@@ -1,0 +1,8 @@
+# Ignore Everything
+*
+
+# Only use required files
+!bot/
+!config*.yml
+!poetry.lock
+!pyproject.toml

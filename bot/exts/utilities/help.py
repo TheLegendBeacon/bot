@@ -5,9 +5,9 @@ import discord
 
 from bot.utilities import get_yaml_val
 
-colors = get_yaml_val("bot/config.yml", "colors")["colors"]
+colors = get_yaml_val("config.yml", "colors")["colors"]
 
-PREFIX = get_yaml_val("bot/config.yml", "bot")["bot"]["prefix"]
+PREFIX = get_yaml_val("config.yml", "bot")["bot"]["prefix"]
 
 
 class Help(commands.Cog):

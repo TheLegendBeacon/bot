@@ -8,11 +8,11 @@ from discord.ext import commands, tasks
 
 from bot.utilities import get_yaml_val
 
-GUILD_ID = get_yaml_val("bot/config.yml", "guild.id")
+GUILD_ID = get_yaml_val("config.yml", "guild.id")
 
-Channels = get_yaml_val("bot/config.yml", "guild")["guild"]["channels"]
+Channels = get_yaml_val("config.yml", "guild")["guild"]["channels"]
 
-DURATION_DICT = get_yaml_val("bot/config.yml", "duration")["duration"]
+DURATION_DICT = get_yaml_val("config.yml", "duration")["duration"]
 
 UNMUTE_FILE = os.path.join(
     "bot",
@@ -21,7 +21,7 @@ UNMUTE_FILE = os.path.join(
     "unmute_times.txt",
 )
 
-colors = get_yaml_val("bot/config.yml", "colors")["colors"]
+colors = get_yaml_val("config.yml", "colors")["colors"]
 
 
 class Moderation(commands.Cog):

@@ -12,7 +12,7 @@ class makeembed(commands.Cog):
     @commands.command()
     async def makeembed(self, ctx):
         """Makes an embed based on parameters set by the user."""
-        data = get_yaml_val("bot/config.yml", "colors")["colors"]
+        data = get_yaml_val("config.yml", "colors")["colors"]
 
         questions = [
             "What is the value of **title**?",
@@ -121,10 +121,11 @@ class makeembed(commands.Cog):
 
         perms = (ctx.author).guild_permissions
 
-        if perms.administrator == True:
+        if perms.administrator:
 
             await ctx.send(
-                "Would you like to send the embed somewhere else? (say `yes` or reply something else to not do it)"
+                "Would you like to send the embed somewhere else? \
+                  (say `yes` or reply something else to not do it)"
             )
             msg = await self.bot.wait_for("message", check=check)
 
