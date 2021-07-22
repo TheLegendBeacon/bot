@@ -7,10 +7,10 @@ from discord.ext import commands
 
 from bot.utilities import get_yaml_val
 
-COLORS = get_yaml_val("bot/config.yml", "colors")["colors"]
-CATS = get_yaml_val("bot/config.yml", "cats")["cats"]
+COLORS = get_yaml_val("config.yml", "colors")["colors"]
+CATS = get_yaml_val("config.yml", "cats")["cats"]
 
-NECATIVE_REPLIES = get_yaml_val("bot/config.yml", "necative")["necative"]
+NECATIVE_REPLIES = get_yaml_val("config.yml", "necative")["necative"]
 
 
 class Catify(commands.Cog):

@@ -9,9 +9,9 @@ from bot.utilities import get_yaml_val
 
 from collections import OrderedDict
 
-COLORS = get_yaml_val("bot/config.yml", "colors")["colors"]
+COLORS = get_yaml_val("config.yml", "colors")["colors"]
 
-NECATIVE_REPLIES = get_yaml_val("bot/config.yml", "necative")["necative"]
+NECATIVE_REPLIES = get_yaml_val("config.yml", "necative")["necative"]
 
 ZEN = [
     "Elegant cattiness is better than ugly.",

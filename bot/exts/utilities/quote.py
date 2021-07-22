@@ -5,7 +5,7 @@ import random
 import asyncio
 from bot.utilities import get_yaml_val
 import re
-quotechannel = get_yaml_val("bot/config.yml", 'guild')['guild']["channels"]["quotes"]
+quotechannel = get_yaml_val("config.yml", 'guild')['guild']["channels"]["quotes"]
 
 
 class Quote(commands.Cog):
