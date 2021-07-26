@@ -61,28 +61,7 @@ class Moderation(commands.Cog):
             await ctx.send("You can't ban yourself!")
             return
 
-        # gets current date and time; converts it with colons and slashes between then to make sense
-        current_time = datetime.now()
-        current_time = current_time.strftime("%H:%M:%S")
-
-        current_date = datetime.today()
-        current_date = current_date.strftime("%d/%m/%y")
-
-        # dm embed made here
-        dm_message = discord.Embed(
-            title="**Infraction**: Ban",
-            description=(
-                f"You just got banned from the `{ctx.guild}` server.\n"
-                f"`reason:` {reason}\n"
-                f"`date and time:` {current_time} {current_date}"
-            ),
-            color=colors["light_blue"],
-        )
-
-        await user.send(embed=dm_message)
-
-        await ctx.guild.ban(user)
-        await ctx.send(f"Successfully banned {user.name}")
+        await ctx.guild.ban(user, reason=reason)
 
         channel = self.bot.get_channel(Channels["mod_log"])
         await channel.send(
