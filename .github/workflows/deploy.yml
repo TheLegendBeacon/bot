@@ -1,19 +1,43 @@
-name: Deploy to DigitalOcean
+name: Deploy - Backend
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
-  deploy:
+  build-and-push-image:
     runs-on: ubuntu-latest
-    name: Deploy
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      - name: Check out Repository
+      - name: Checkout repository
         uses: actions/checkout@v2
-        
-      - name: Pull Changes and Restart Job
-        run: |
-          mkdir ~/.ssh && touch ~/.ssh/known_hosts && echo ${{ secrets.KNOWN_HOSTS }} >> ~/.ssh/known_hosts
-          sshpass -p ${{ secrets.SSHPASS }} ssh -o "StrictHostKeyChecking no" -tt ${{ secrets.SSH }} -t "cd bot && git pull origin main && systemctl restart catbot"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3.4.1
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

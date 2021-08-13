@@ -3,29 +3,24 @@ build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core>=1.0.0"]
 
 [tool.poetry]
-# Core Devs
-authors = ["kronifer", "ankith101.rar", "Da Cat Squid", "DawnOfMidnight", "Objectivix", "Dannynotsmart", "Aboo Minister"]
+authors = ["Cat Dev Group"]
 description = ""
 name = "bot"
-version = "0.1.0"
+version = "1.0.0"
 
 [tool.poetry.dependencies]
-PyYAML = "^5.4.1"
-datetime = "^4.3"
-"discord.py" = "^1.7.1"
-loguru = "^0.5.3"
-python = "^3.8"
-python-dotenv = "^0.17.0"
-pytz = "^2021.1"
-utils = "^1.0.1"
+python = "~3.9"
+PyYAML = "~5.4"
+"discord.py" = {url = "https://github.com/Rapptz/discord.py/archive/master.zip"}
+loguru = "~0.5"
+python-dotenv = "~0.17"
 
 [tool.poetry.dev-dependencies]
-black = "^20.8b1"
-pytest = "^5.2"
-taskipy = "^1.8.1"
-flake8 = "^3.9.2"
+black = "~20.8b1"
+pytest = "~5.2"
+taskipy = "~1.8.1"
+isort = "~5.9.3"
 
 [tool.taskipy.tasks]
 start = "poetry run python -m bot"
-lint = "poetry run flake8"
-format = "poetry run black ."
+format = "poetry run black . && poetry run isort ."
