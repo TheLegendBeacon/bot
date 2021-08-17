@@ -1,12 +1,18 @@
+import os
 from pathlib import Path
 
 from discord.ext import commands
 from discord.ext.commands import Bot
+from dotenv import load_dotenv
 from loguru import logger
+from tortoise import Tortoise
 
 from .utilities import config
 
+load_dotenv(dotenv_path=Path(".env"))
 PREFIX = config("bot")["bot"]["prefix"]
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 def find_extensions() -> None:
@@ -19,6 +25,17 @@ def find_extensions() -> None:
 def path_to_module(path: Path) -> str:
     """Convert a path like "bot/exts/foo/bar.py" to "bot.exts.foo.bar"."""
     return str(path.parent.as_posix()).replace("/", ".") + f".{path.stem}"
+
+
+async def init_orm():
+    await Tortoise.init(
+        db_url=DATABASE_URL,
+        modules={
+            "models": ["bot.database.models"],
+        },
+    )
+
+    await Tortoise.generate_schemas()
 
 
 class CatBot(Bot):
@@ -48,3 +65,6 @@ class CatBot(Bot):
                 logger.debug(f"Exception:\n{e}")
             else:
                 logger.success(f"Loaded extension {path.stem} " f"from {path.parent}")
+
+        # Connect to Postgres
+        await init_orm()

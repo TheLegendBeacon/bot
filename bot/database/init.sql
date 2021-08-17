@@ -9,6 +9,7 @@ CREATE TABLE quotes (
 CREATE TABLE infractions (
     id SERIAL PRIMARY KEY,
     user TEXT NOT NULL,
+    actor TEXT NOT NULL,
     type TEXT NOT NULL,
     reason TEXT NOT NULL,
     date TIMESTAMP NOT NULL,

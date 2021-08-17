@@ -1,7 +1,6 @@
 bot:
-  prefix:      "--"
+  prefix:      "sudo "
   purge_limit: 200
-  extpath: "bot/exts"
   bot_repo_url: "https://github.com/cat-dev-group/bot"
 
   status:
@@ -33,41 +32,42 @@ guild:
   channels:
     # No category
     roles:      809431886941650964
-    cats:       834169331108675604
-    quotes:     852266180030234754
+    rules:      852241870377582683
     
-    # development
-    dev:        809125747037306960
-    spam:       809158704644751370
-    resources:  834503282243141642
+    development:
+      development:        809125747037306960
+      miscellaneous:       860919953657561088
+      off_topic:  809158704644751370
+      polls: 834912309956444210
+      learning: 859896480109035521
+
+    non_chat:
+      announcements: 840040670492360714
+      changelog: 853977268174716969
+      resources: 834503282243141642
+      quotes: 852266180030234754
+
+    catcord:
+      general: 858143324874997760
+      backend: 858143285503590410
+      devops:  869377777059631134
     
-    # Logs
-    dev_log:    834438897567400018
-    error_log:  834495121055285288
-    mod_log:    834500035982786620
+    logs:
+      dev_log:    834438897567400018
+      error_log:  834495121055285288
+      mod_log:    834500035982786620
 
     # voice
     voice_chat: 808854246119178254
+    learning:   859899959864590387
   
   roles:
+    divine_cat: 834795622833848331
     bots:       811331779138682930
-    helper:     834065360943579136
-    cat_dev:    833841708805652481
+    core_cat_dev:    416345453530054657
+    part_time:  839844083463749664
     bot_tester: 809155836622405683
     friends:    809429873746771979
-    divine_cat: 834795622833848331
-
-    cat:
-      zero:  834240256530317313
-      one:   834171584017203261
-      two:   834171044385390612
-      three: 834171124857831454
-      four:  834171211147640872
-      five:  834171280080896021
-      six:   834171331490086912
-      seven: 834171399304249374
-      eight: 834171451228684299
-      nine:  834171530795417651
 
 cats:
   - "ᓚᘏᗢ"
