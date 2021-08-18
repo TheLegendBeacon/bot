@@ -36,6 +36,8 @@ class Bot(commands.Bot):
 
         self.http_session = ClientSession()
         super().__init__(command_prefix=PREFIX, help_command=None, intents=intents)
+        
+        self.add_command(self.reload, name="reload")
 
     def load_extensions(self) -> None:
         """Load all the extensions in the exts/ folder."""
@@ -125,6 +127,26 @@ class Bot(commands.Bot):
         role = utils.get(member.guild.roles, id=ROLES["friends"])
 
         await member.add_roles(role)
+    
+    async def reload(client, ctx, *args):
+        await ctx.send("Please wait...")
+
+        if bool(args) is False:
+            for cog in client.cog_paths:
+                client.reload_extension(cog)
+            await ctx.send("Reloaded all cogs.")
+
+        elif bool(args) is True:
+            for arg in args:
+                if arg not in client.cogs:
+                    await ctx.send(f"{arg} not found.")
+                    return
+
+            for arg in args:
+                client.reload_extension(arg)
+                await ctx.send(f"Reloaded {arg}")
+                
+    
 
     async def close(self) -> None:
         """Close Http session when bot is shutting down."""
