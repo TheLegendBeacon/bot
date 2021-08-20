@@ -15,7 +15,7 @@ PyYAML = "~5.4"
 loguru = "~0.5"
 python-dotenv = "~0.17"
 asyncpg = "^0.24.0"
-tortoise-orm = {extras = ["asyncpg"], version = "^0.17.6"}
+SQLAlchemy = "^1.4.23"
 
 [tool.poetry.dev-dependencies]
 black = "~20.8b1"
