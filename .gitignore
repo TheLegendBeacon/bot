@@ -13,3 +13,7 @@ repl-deploy
 bot/exts/moderation/unmute_times.txt
 
 /config.yml
+
+venv/
+
+.vscode/
